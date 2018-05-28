@@ -1,4 +1,10 @@
-// Copyright (c) 2018 by XU BAI. All Rights Reserved.
+/**
+ * @Author: XU BAI <by777>
+ * @Date:   29/05/18
+ * @Last modified by:   by777
+ * @Last modified time: 29/05/18
+ * @Copyright: All Rights Reserved.
+ */
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -12,10 +18,10 @@ LNode* createliklist(void);//尾插法
 LNode* createliklistH(void);//头插法
 LNode* chooseCreate(int choose);
 LNode* createliklistManu(int a[], int len);
-void inversion(LNode *head);//逆置
 LNode* mergelik(LNode *head_1,LNode *head_2);//合并有序链表
 void visitliklist(LNode *head);
 void delElement(LNode* head, int x);//按值删除
+void inversion(LNode *head);//逆置
 
 LNode* createliklistH(void){
   LNode* head, *p;
@@ -26,7 +32,6 @@ LNode* createliklistH(void){
     /* code */
     p = (LNode*)malloc(sizeof(LNode));
     p -> data = i;
-
     p -> next = head -> next;
     head -> next = p;
   }
@@ -116,7 +121,6 @@ void inversion(LNode *head){
      p = p -> next;
      q -> next = head -> next;
      head -> next = q;//q前插入操作
-
   }
 }
 
