@@ -63,11 +63,15 @@ void visitliklist(LNode *head){
   cout<<endl;
 }
 
-LNode* chooseCreate(int choose){
+LNode* chooseCreate(){
+  int option;
+  cout<<"createliklist(1) or createliklistH(2)?"<<endl;
+  cin>>option;
   LNode* head = NULL;
-  switch (choose) {
+  switch (option) {
     case 1:head = createliklist();break;
     case 2:head = createliklistH();break;
+    default: chooseCreate();
   }
   return head;
 }
@@ -163,14 +167,15 @@ LNode* mergelik(LNode *La, LNode *Lb) {
 
 int main() {
   /*
-  cout<<"createliklist(1) or createliklistH(2)?"<<endl;
-  int choose;cin>>choose;
-  LNode* head = chooseCreate(choose);
-  visitliklist(head);cout<<endl;
+
+
+
   int value;cin>>value;
   delElement(head, value);
   visitliklist(head);
   */
+  LNode* head = chooseCreate();
+  visitliklist(head);cout<<endl;
 
   int a[] = {0,1,5,11,20};
   LNode *head_1 = createliklistManu(a,5);
