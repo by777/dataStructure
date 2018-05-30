@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include <stdlib.h>
+#include <stdio.h>
 using namespace std;
 
 typedef struct LNode{
@@ -54,6 +55,10 @@ LNode* createliklist(void){
 }
 
 void visitliklist(LNode *head){
+  if (head -> next == NULL) {
+    cout<<"plz create linklist first!"<<endl;
+    return;
+  }
   cout<<"----------visit-----------"<<endl;
   LNode *v = head -> next;
   while (v) {
@@ -65,7 +70,18 @@ void visitliklist(LNode *head){
 
 LNode* chooseCreate(){
   int option;
-  cout<<"createliklist(1) or createliklistH(2)?"<<endl;
+  cout<<"#=======================================================#"<<endl;
+  cout<<"|                                                       |"<<endl;
+  cout<<"| 1.Create linklist with tail interpolation             |"<<endl;
+  cout<<"| 2.Create linklist with head interpolation             |"<<endl;
+  // cout<<"* 3.Create linklist manually                            *"<<endl;
+  // cout<<"* 4.Delete element by value                             *"<<endl;
+  // cout<<"* 5.Traversal element linklist                          *"<<endl;
+  // cout<<"* 6.Merge two linklist                                  *"<<endl;
+
+  cout<<"|                                                       |"<<endl;
+  cout<<"#=======================================================#"<<endl;
+
   cin>>option;
   LNode* head = NULL;
   switch (option) {
@@ -78,6 +94,10 @@ LNode* chooseCreate(){
 
 void delElement(LNode* head, int x){
   //删除值为x的第一个元素
+  if (head -> next == NULL) {
+    cout<<"plz create linklist first!"<<endl;
+    return;
+  }
   LNode *p = head ;
   LNode *q = p -> next;
   while (q!=NULL&&q->data!=x) {
@@ -116,6 +136,10 @@ LNode* createliklistManu(int a[], int len){
 void inversion(LNode *head){
   // 逆置链表
   // 保存head后继节点，取下head，遍历剩余节点，前插法插入head
+  if (head -> next == NULL) {
+    cout<<"plz create linklist first!"<<endl;
+    return;
+  }
   LNode *p = head -> next;
   LNode *q = NULL;
   head -> next = NULL;
@@ -129,6 +153,10 @@ void inversion(LNode *head){
 }
 
 LNode* mergelik(LNode *La, LNode *Lb) {
+  if (La -> next == NULL || Lb -> next == NULL) {
+    cout<<"plz create two linklist first!"<<endl;
+    return NULL;
+  }
   LNode *Lc, *pc, *ptr;
   Lc = La;
   pc = La;
@@ -183,6 +211,6 @@ int main() {
   LNode *head_2 = createliklistManu(b,6);
   LNode* merResult = mergelik(head_1, head_2);
   visitliklist(merResult);
-
+  getchar();
   return 0;
 }

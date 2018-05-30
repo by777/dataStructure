@@ -24,8 +24,8 @@ typedef struct likStack{
 
 int chooseOptions();
 sqStack initSqStack();
-int sqPush(sqStack sqstack, int a[], int length);
-int sqPop(sqStack sqstack);
+int sqPush(sqStack* sqstack, int a[], int length);
+int sqPop(sqStack* sqstack);
 
 int chooseOptions(){
   cout<<"plz choose likStack(1) or sqStack(2)"<<endl;
@@ -45,42 +45,40 @@ sqStack initSqStack(){
   return stack;
 }
 
-int sqPush(sqStack sqstack, int a[], int length){
-  if (sqstack.top==maxSize-1) {
+int sqPush(sqStack* sqstack, int a[], int length){
+  if (sqstack->top==maxSize-1) {
     cout<<"stackover"<<endl;
     return 0;
   }
 
-  // for (int i = 0;i < length; ++i) {
-  //   cout<<i<<" ";
-  //   ++sqstack.top;
-  //   cout<<sqstack.top;
-  //   sqstack.elem[sqstack.top] = i;
-  // }
-  return 1;
+  for (int i = 0;i < length; ++i) {
+    sqstack->elem[++sqstack->top] = i;
+  }
+  return 0;
 }
 
-int sqPop(sqStack sqstack){
-  if (sqstack.top == -1) {
+int sqPop(sqStack* sqstack){
+
+  if (sqstack->top == -1) {
     cout<<"stack empty"<<endl;
     return -32767;
   }
-  // return sqstack.elem[sqstack.top--];
-  return -32767;
+
+  return sqstack->elem[sqstack->top--];
 }
 
 int main() {
-  // sqStack sqstack =  initSqStack();
-  // int a[10] = {0,1,2,3,4,5,6,7,8,9};
-  // int length = 10;
-  // sqPush(sqstack,a,length);
-  // cout<<sqstack.top<<endl;
-  // int i;
-  // while (sqstack.top != -1) {
-  //   i = sqPop(sqstack);
-  //   cout<<i<<" "<<endl;
-  // }
-  chooseOptions();
+  sqStack sqstack =  initSqStack();
+  int a[10] = {0,1,2,3,4,5,6,7,8,9};
+  int length = 10;
+  sqPush(&sqstack,a,length);
+  while (sqstack.top!=-1) {
+    cout<<sqPop(&sqstack);
+  }
+
+
+
+  //chooseOptions();
 
    return 0;
  }
