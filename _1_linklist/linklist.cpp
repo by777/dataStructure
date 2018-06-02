@@ -55,7 +55,9 @@ LNode* createliklist(void){
 }
 
 void visitliklist(LNode *head){
-  if (head -> next == NULL) {
+  cout<<"-#-"<<endl;
+
+  if (head -> next == NULL||head==NULL) {
     cout<<"plz create linklist first!"<<endl;
     return;
   }
@@ -70,23 +72,27 @@ void visitliklist(LNode *head){
 
 LNode* chooseCreate(){
   int option;
-  cout<<"#=======================================================#"<<endl;
-  cout<<"|                                                       |"<<endl;
-  cout<<"| 1.Create linklist with tail interpolation             |"<<endl;
-  cout<<"| 2.Create linklist with head interpolation             |"<<endl;
+  cout<<"#########################################################"<<endl;
+  cout<<"#                                                       #"<<endl;
+  cout<<"#                                                       #"<<endl;
+  cout<<"# 1.Create linklist with tail interpolation             #"<<endl;
+  cout<<"# 2.Create linklist with head interpolation             #"<<endl;
+  cout<<"# 3.Traversal                                           #"<<endl;
   // cout<<"* 3.Create linklist manually                            *"<<endl;
   // cout<<"* 4.Delete element by value                             *"<<endl;
   // cout<<"* 5.Traversal element linklist                          *"<<endl;
   // cout<<"* 6.Merge two linklist                                  *"<<endl;
 
-  cout<<"|                                                       |"<<endl;
-  cout<<"#=======================================================#"<<endl;
+  cout<<"#                                                       #"<<endl;
+  cout<<"#########################################################"<<endl;
 
   cin>>option;
   LNode* head = NULL;
+  head -> next = NULL;
   switch (option) {
     case 1:head = createliklist();break;
     case 2:head = createliklistH();break;
+    // case 3:visitliklist(head);break;
     default: chooseCreate();
   }
   return head;

@@ -30,8 +30,9 @@ sqStack initSqStack();
 int sqPush(sqStack* sqstack, int a[], int length);
 int sqPop(sqStack* sqstack, int &elem);
 
-stackNode* initstackNode();
-int likPush(stackNode* top, int data);
+void initstackNode(stackNode *&top);
+void likPush(stackNode* top, int data);
+int likPop(stackNode* top,int &elem);
 
 int chooseOptions(){
   cout<<"plz choose stackNode(1) or sqStack(2)"<<endl;
@@ -73,38 +74,65 @@ int sqPop(sqStack* sqstack, int &elem){
   return sqstack->top;
 }
 
-stackNode* initstackNode(){
-  stackNode* top;
+void initstackNode(stackNode *&top){
+
   top = (stackNode*)malloc(sizeof(stackNode));
   top -> next = NULL;
-  return (top);
+
 
 }
 
-int likPush(stackNode* top, int data){
+void likPush(stackNode* top, int data){
   stackNode* p;
   p = (stackNode*)malloc(sizeof(stackNode));
-  if (!p) {
-    return -1;
-  }
+  p -> next = NULL;
   p -> data = data;
   //尾插
   p -> next = top -> next;
   top -> next = p;
-  return 0;
+
 
 }
 
-int main() {
-  sqStack sqstack =  initSqStack();
-  int a[10] = {0,1,2,3,4,5,6,7,8,9};
-  int length = 11;
-  sqPush(&sqstack,a,length);
-  int elem;
-  while (sqstack.top!=-1) {
-    //flag > 0 ,elem接收pop
-    cout<<sqPop(&sqstack,elem);
+int likPop(stackNode* top, int &elem){
+  if (top -> next == NULL) {
+    return -1;
   }
+  stackNode *p = top -> next;
+  elem = p -> data;
+  top -> next = p -> next;
+  free(p);
+
+  return 0;
+}
+
+int main() {
+  //sqStack sqstack =  initSqStack();
+  int a[10] = {0,1,2,3,4,5,6,7,8,9};
+  int length = 10;
+
+  // sqPush(&sqstack,a,length);
+
+
+  stackNode *top ;
+  initstackNode(top);
+  int i;
+  for (i = 0;i < length; i++) {
+    likPush(top,a[i]);
+  }
+  int elem;
+  while (likPop(top,elem)!=-1) {
+    cout<<elem<<" ";
+  }
+
+
+
+
+
+
+
+
+
 
 
 
