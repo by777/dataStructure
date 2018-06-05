@@ -34,6 +34,19 @@ void initstackNode(stackNode *&top);
 void likPush(stackNode* top, int data);
 int likPop(stackNode* top,int &elem);
 
+
+int LIsEmpty(stackNode *top);
+
+
+int LIsEmpty(stackNode *top){
+  if (top -> next == NULL) {
+    return 0;
+  }
+  else{
+    return -1;
+  }
+}
+
 int chooseOptions(){
   cout<<"plz choose stackNode(1) or sqStack(2)"<<endl;
   int option;

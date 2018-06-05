@@ -49,9 +49,10 @@ int op(int a,char Op, int b){
 }
 
 int com(char exp[]){
-  /* 编写一个函数，求后缀式的值，后缀式exp[]以‘\0’作为结束
+  /* #2
+   * 编写一个函数，求后缀式的值，后缀式exp[]以‘\0’作为结束
    * 并假设数字为1位，所有数字可整除
-  */
+   */
   int stack[maxSize], a, b, result;
   char Op;
   int top = -1;
