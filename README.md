@@ -1,7 +1,8 @@
 # dataStructure
---------------
+
 ![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)  ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
-----------
+
+------------
 ### 考研数据结构练习题目
 * 数据结构学习中，见笑
 * 接受一切友好的建议和批评，包括且不限于代码的逻辑、命名、以及考试热点
