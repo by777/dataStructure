@@ -9,6 +9,27 @@ using namespace std;
 int match(char exp[],int n);
 int op(int a,char Op, int b);
 int com(char exp[]);
+void conversion(int n, int d);
+void conversion(int n, int d){
+/* #3
+ * 十进制整数向其它进制数d（二、八、十六）的转换
+ * 转换法则： n = (n div d) * d + n mod d
+ * 其中：div为整除运算，mod邱宇
+*/
+int stack[maxSize];
+int top = -1;
+int k;
+while (n > 0) {
+  k = n % d;
+  stack[++top] = k;
+  n = n / d;
+}
+while (top != -1) {
+  cout<<stack[top--];
+
+}
+
+}
 int match(char exp[], int n){
 /* #1
 * C语言里算术表达式中的括号只有小括号。编写算法，
@@ -82,8 +103,11 @@ int main() {
   int result = match(exp,len);
   cout<<result;
   */
+  /*#2
   char exp[11] = {'1' ,'1' ,'1' , '1' , '*' , '+' , '+' , '1' , '/' , '\0' };
   int result = com(exp);
   cout<<result<<endl;
+  */
+  conversion(1348,2);
   return 0;
 }
