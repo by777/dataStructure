@@ -1,24 +1,25 @@
-# dataStructure
+# 考研数据结构练习题目
+![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)     ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
 
-![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)  ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
 
-------------
-### 考研数据结构练习题目
-* 数据结构学习中，见笑
-* 接受一切友好的建议和批评，包括且不限于代码的逻辑、命名、以及考试热点
-* 会不断迭代旧的章节，由简到难重在应用
-* 会适时更新经典算法
+* 考研数据结构从零学习中（逃
+* 接受一切友好的建议和批评，包括且不限于逻辑、命名和热点
+* 会不断增量旧的章节，由简到难
+* 会适时穿插经典算法和常考题型
 * 每日更新至少一个方法
 
-
-### CATALOG
+# CATALOG
 
 * 线性表及基本操作
   * 链表的增删合逆
+  * **附加题（栈和链表综合）**
 * 栈和队列及应用
-  * 算术表达式
-  * ...
+  * 数制转换
+  * 括号匹配
+  * **前/中/后缀表达式的相互转换和应用**
 * 串和匹配
+  * 串的定义
+  * **朴素匹配和KMP模式匹配**
 * 数组和广义表
 * 树
 * 图及其算法
@@ -27,6 +28,6 @@
 * 算法分析
 * to be continued...
 
-##### 本仓库创建于于2018年5月29日
+###### 本仓库创建于2018年5月29日
 ---------
 *<p align="right">凡有所学，皆成性格</p>*
