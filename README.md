@@ -37,8 +37,8 @@
 ###### 本仓库创建于2018年5月29日
 ---------
 <font size=1 align="left">
-* When I wrote this,<br>
+When I wrote this,<br>
 only God and I understood what I was doing.<br>
-Now, only God knows.  *
+Now, only God knows.  
 <p align="right" >凡有所学，皆成性格（逃</p>
 </font>
