@@ -172,10 +172,10 @@ int main() {
   // char subStrData[20] = {'7' , '9', '\0'};
   // sqStrAssign(str,strData);
   // sqStrAssign(subStr, subStrData);
-  //strConcat(str, subStr);
-  //strPrint(str);
-  //cout<<str.length<<endl;
-  //cout<<naiveComp(str,subStr);
+  // strConcat(str, subStr);
+  // strPrint(str);
+  // cout<<str.length<<endl;
+  // cout<<naiveComp(str,subStr);
   LikStr likstr;
   likStrAssign(likstr,"abcd");
   vLikStr(likstr);
