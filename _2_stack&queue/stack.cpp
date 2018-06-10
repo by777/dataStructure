@@ -25,18 +25,13 @@ typedef struct stackNode{
 
 
 int chooseOptions();
-
-sqStack initSqStack();
-int sqPush(sqStack* sqstack, int a[], int length);
-int sqPop(sqStack* sqstack, int &elem);
-
+sqStack initSqStack();//初始顺序栈
+int sqPush(sqStack* sqstack, int a[], int length);//压顺序栈
+int sqPop(sqStack* sqstack, int &elem);//出顺序栈
 void initstackNode(stackNode *&top);
-void likPush(stackNode* top, int data);
+void likPush(stackNode* top, int data);//链栈的
 int likPop(stackNode* top,int &elem);
-
-
 int LIsEmpty(stackNode *top);
-
 
 int LIsEmpty(stackNode *top){
   if (top -> next == NULL) {
@@ -78,7 +73,6 @@ int sqPush(sqStack* sqstack, int a[], int length){
 }
 
 int sqPop(sqStack* sqstack, int &elem){
-
   if (sqstack->top == -1) {
     cout<<"stack empty"<<endl;
     return sqstack->top;
@@ -88,11 +82,8 @@ int sqPop(sqStack* sqstack, int &elem){
 }
 
 void initstackNode(stackNode *&top){
-
   top = (stackNode*)malloc(sizeof(stackNode));
   top -> next = NULL;
-
-
 }
 
 void likPush(stackNode* top, int data){
@@ -103,8 +94,6 @@ void likPush(stackNode* top, int data){
   //尾插
   p -> next = top -> next;
   top -> next = p;
-
-
 }
 
 int likPop(stackNode* top, int &elem){
@@ -123,10 +112,7 @@ int main() {
   //sqStack sqstack =  initSqStack();
   int a[10] = {0,1,2,3,4,5,6,7,8,9};
   int length = 10;
-
   // sqPush(&sqstack,a,length);
-
-
   stackNode *top ;
   initstackNode(top);
   int i;
@@ -137,19 +123,7 @@ int main() {
   while (likPop(top,elem)!=-1) {
     cout<<elem<<" ";
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  //chooseOptions();
+   //chooseOptions();
 
    return 0;
  }

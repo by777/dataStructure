@@ -87,7 +87,7 @@ int KMP(StringType str, StringType substr, int next[]){
     }
 
     else{
-      j = next[j];
+      j = next[j];//
     }
   }
 
@@ -107,10 +107,10 @@ void getNext(StringType substr, int next[]){
     if (j == 0 || substr.strData[i] == substr.strData[j]) {
       ++i;
       ++j;
-      next[i] = j;
+      next[i] = j;////////////
     }
     else{
-      j = next[j];
+      j = next[j];//
     }
   }
 }

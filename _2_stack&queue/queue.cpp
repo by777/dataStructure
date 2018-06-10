@@ -26,16 +26,14 @@ typedef struct sqQueue{
   char data[maxSize];
   int front;
   int rear;
-}sqQueue;
+}sqQueue;//静态队列
 
 sqQueue initCirQueue(void);
+void initLQueue(LiQueue *&q);
+void enLQueue(LiQueue *q, int elem);
+int isLQueueEmpty(LiQueue *q);
 int inSqCircle(sqQueue &Q, int e);
 int delSqCircle(sqQueue &Q,char &e);
-
-void initLQueue(LiQueue *&q);
-int isLQueueEmpty(LiQueue *q);
-
-void enLQueue(LiQueue *q, int elem);
 
 int deLQueue(LiQueue *q, int &elem) {
   if (isLQueueEmpty(q) == 0) {

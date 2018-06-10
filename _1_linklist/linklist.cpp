@@ -17,10 +17,10 @@ typedef struct LNode{
 
 LNode* createliklist(void);//尾插法
 LNode* createliklistH(void);//头插法
-LNode* chooseCreate(int choose);
-LNode* createliklistManu(int a[], int len);
+LNode* chooseCreate(int choose);//主选择
+LNode* createliklistManu(int a[], int len);//手工创建链表
 LNode* mergelik(LNode *head_1,LNode *head_2);//合并有序链表
-void visitliklist(LNode *head);
+void visitliklist(LNode *head);//遍历
 void delElement(LNode* head, int x);//按值删除
 void inversion(LNode *head);//逆置
 

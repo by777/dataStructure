@@ -1,3 +1,17 @@
+/* #1
+* C语言里算术表达式中的括号只有小括号。编写算法，
+* 判断一个表达式中的括号是否正确配对，表达式已经
+* 存在字符数组exp[]中，表达式字符个数为n
+*
+* #2
+* 编写一个函数，求后缀式的值，后缀式exp[]以‘\0’作为结束
+* 并假设数字为1位，所有数字可整除
+*
+* #3
+* 十进制整数向其它进制数d（二、八、十六）的转换
+* 转换法则： n = (n div d) * d + n mod d
+* 其中：div为整除运算，mod邱宇
+*/
 #include <iostream>
 #include <stdlib.h>
 #define OK 1
@@ -11,11 +25,7 @@ int op(int a,char Op, int b);
 int com(char exp[]);
 void conversion(int n, int d);
 void conversion(int n, int d){
-/* #3
- * 十进制整数向其它进制数d（二、八、十六）的转换
- * 转换法则： n = (n div d) * d + n mod d
- * 其中：div为整除运算，mod邱宇
-*/
+/* #3 */
 int stack[maxSize];
 int top = -1;
 int k;
@@ -31,11 +41,7 @@ while (top != -1) {
 
 }
 int match(char exp[], int n){
-/* #1
-* C语言里算术表达式中的括号只有小括号。编写算法，
-* 判断一个表达式中的括号是否正确配对，表达式已经
-* 存在字符数组exp[]中，表达式字符个数为n
-*/
+/* #1 */
 char stack[maxSize];
 int top = -1;
 for (int i = 0;i < n;i++) {
@@ -70,10 +76,7 @@ int op(int a,char Op, int b){
 }
 
 int com(char exp[]){
-  /* #2
-   * 编写一个函数，求后缀式的值，后缀式exp[]以‘\0’作为结束
-   * 并假设数字为1位，所有数字可整除
-   */
+  /* #2 */
   int stack[maxSize], a, b, result;
   char Op;
   int top = -1;
