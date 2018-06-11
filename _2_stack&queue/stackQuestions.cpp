@@ -73,6 +73,7 @@ int op(int a,char Op, int b){
       return a / b;
     }
   }
+  return ERROR;
 }
 
 int com(char exp[]){

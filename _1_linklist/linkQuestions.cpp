@@ -11,18 +11,6 @@ typedef struct ListNode{
   ListNode *m_pNext;
 }ListNode;
 
-ListNode* createliklistH1(void);
-ListNode* createliklistH2(void);
-
-ListNode* createliklistH1(void){
-
-  return NULL;
-}
-
-ListNode* createliklistH2(void){
-
-  return NULL;
-}
 
 void PublicNode(ListNode *pHead1, ListNode *pHead2);
 void PublicNode(ListNode *pHead1, ListNode *pHead2){
