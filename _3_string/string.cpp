@@ -14,13 +14,13 @@ typedef struct{
   int length;
 }LikStr;
 
-void getNext(StringType substr, int next[]);
+void getNext(StringType substr, int next[]);// KMP获取next数组
 void vLikStr(LikStr likstr);
-void sqStrAssign(StringType &str, char strData[]);
+void sqStrAssign(StringType &str, char strData[]);//顺序存储的串
 void strPrint(StringType str);
 int likStrAssign(LikStr &str, char *ch);
-int strConcat(StringType &str, StringType substr);
-int naiveComp(StringType str, StringType substr);
+int strConcat(StringType &str, StringType substr);//联结
+int naiveComp(StringType str, StringType substr);//朴素比较字符串
 int KMP(StringType str, StringType substr, int next[]);
 
 void vLikStr(LikStr likstr){
