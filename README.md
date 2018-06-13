@@ -1,6 +1,13 @@
+<!--
+@Author: XU BAI
+@Date:   29/05/18
+@Filename: README.md
+@Last modified by:   XU BAI
+@Last modified time: 14/06/18
+@Copyright: All Rights Reserved.
+-->
 # 考研数据结构练习题目
 ![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)     ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
-
 
 * 考研数据结构从零学习中（逃
 * 接受一切友好的建议和批评，包括且不限于逻辑、命名和热点
@@ -29,6 +36,15 @@
   * **线索二叉树及遍历**
   * **赫夫曼树和赫夫曼编码**
 * 图
+  * 邻接矩阵 / 邻接表
+  * 十字链表 / 邻接多重表
+  * DFS / BFS 遍历
+  * 最小生成树Prim
+  * 最小生成树Kruska
+  * 最短路径Dijkstra
+  * 最短路径Floyd
+  * 拓扑排序TopologicalSort
+  * 关键路径CriticalPath
 * 查找
 * 排序
 * 算法分析
