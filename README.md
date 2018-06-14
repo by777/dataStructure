@@ -3,16 +3,16 @@
 @Date:   29/05/18
 @Filename: README.md
 @Last modified by:   XU BAI
-@Last modified time: 14/06/18
+@Last modified time: 15/06/18
 @Copyright: All Rights Reserved.
 -->
 # 考研数据结构练习题目
 ![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)     ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
 
-* 考研数据结构从零学习中（逃
-* 接受一切友好的建议和批评，包括且不限于逻辑、命名和热点
-* 会不断增量旧的章节，由简到难
-* 会适时穿插经典算法和常考题型
+* 考研数据结构从零学习中。。。
+* 接受一切友好的建议和批评，包括且不限于逻辑、命名和考点
+* 会不断增量旧章节里的内容和注释
+* 会适时穿插面试算法和新题型
 * 每日更新至少一个方法
 
 # CATALOG
@@ -30,6 +30,7 @@
   * 串的定义
   * **朴素匹配和KMP模式匹配**
 * 数组和广义表
+  * 稀疏矩阵和广义表
 * 树
   * **树的存储结构和逻辑结构**
   * **4种遍历方法 / 递归&非递归**
