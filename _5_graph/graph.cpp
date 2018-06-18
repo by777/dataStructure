@@ -32,6 +32,34 @@ typedef struct{
 
 void CreateMGraph(MGraph *G);//邻接矩阵
 void CreateALGraph(GraphAdjList *G);//邻接表建立
+void MGDFS(MGraph G,int i);
+void MGDFSTraverse(MGraph G);//邻接矩阵深度优先遍历
+bool visited[MAXVEX];//邻接矩阵访问标志的数组
+
+void MGDFS(MGraph G,int i){
+  int j;
+  visited[i] = 1;
+  printf("%c ", G.vexs[i] );//操作
+  for(j=0;j<G.numNodes;j++){
+    if (G.arc[i][j]==1&&visited[j]) {
+      MGDFS(G,j);//对未访问的邻接顶点递归调用
+    }
+  }
+}
+
+void MGDFSTraverse(MGraph G){
+  int i;
+  for (i=0;i<G.numNodes;i++) {
+    //初始所有顶点状态都是未访问过状态
+    visited[i]=0;
+  }
+  for(i=0;i<G.numNodes;i++){
+    if (!visited[i]) {
+      MGDFS(G,i);//对为访问过的节点DFS
+    }
+  }
+}
+
 void CreateALGraph(GraphAdjList *G){
   int i,k,j;
   EdgeNode *e;
@@ -49,7 +77,7 @@ void CreateALGraph(GraphAdjList *G){
     e->adjvex=j;					/* 邻接序号为j */
     e->next=G->adjList[i].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */
     G->adjList[i].firstedge=e;		/* 将当前顶点的指针指向e */
-
+    ////////////////////////////////////////////////////////////////////////////
     e=(EdgeNode *)malloc(sizeof(EdgeNode)); /* 向内存申请空间,生成边表结点 */
     e->adjvex=i;					/* 邻接序号为i */
     e->next=G->adjList[j].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */
