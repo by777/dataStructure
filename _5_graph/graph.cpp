@@ -34,8 +34,52 @@ void CreateMGraph(MGraph *G);//邻接矩阵
 void CreateALGraph(GraphAdjList *G);//邻接表建立
 void MGDFS(MGraph G,int i);
 void MGDFSTraverse(MGraph G);//邻接矩阵深度优先遍历
+void CreateMGraphDemo(MGraph *G);//快速创建邻接矩阵Demo
 bool visited[MAXVEX];//邻接矩阵访问标志的数组
+void CreateMGraphDemo(MGraph *G){
+  int i,j;
+  G -> numEdges = 15;
+  G -> numNodes = 9;
+  // 读入顶点信息建立顶点表
+  G -> vexs[0] = 'A';
+  G -> vexs[1] = 'B';
+  G -> vexs[2] = 'C';
+	G -> vexs[3] = 'D';
+	G -> vexs[4] = 'E';
+	G -> vexs[5] = 'F';
+	G -> vexs[6] = 'G';
+	G -> vexs[7] = 'H';
+	G -> vexs[8] = 'I';
+  // 初始化图
+  for (i = 0; i< G->numNodes;i++) {
+    for (j = 0;j < G->numNodes;j++) {
+      G -> arc[i][j]=0;
+    }
+  }
+  G->arc[0][1]=1;
+	G->arc[0][5]=1;
+	G->arc[1][2]=1;
+	G->arc[1][8]=1;
+	G->arc[1][6]=1;
+	G->arc[2][3]=1;
+	G->arc[2][8]=1;
+	G->arc[3][4]=1;
+	G->arc[3][7]=1;
+	G->arc[3][6]=1;
+	G->arc[3][8]=1;
+	G->arc[4][5]=1;
+	G->arc[4][7]=1;
+	G->arc[5][6]=1;
+	G->arc[6][7]=1;
+  for(i = 0; i < G->numNodes; i++)
+	{
+		for(j = i; j < G->numNodes; j++)
+		{
+			G->arc[j][i] =G->arc[i][j];
+		}
+	}
 
+}
 void MGDFS(MGraph G,int i){
   int j;
   visited[i] = 1;
@@ -63,21 +107,21 @@ void MGDFSTraverse(MGraph G){
 void CreateALGraph(GraphAdjList *G){
   int i,k,j;
   EdgeNode *e;
-  cout<<"Please input numNodes and numEdges "<<endl;
+  cout<<"请输入顶点数和边数(逗号分隔)："<<endl;
   scanf("%d,%d",&G->numNodes,&G->numEdges);
-  /* 读入顶点信息,建立顶点表 */
+  cout<<"读入顶点信息,建立顶点表"<<endl;
   for (i = 0; i <G -> numNodes; i++) {
     scanf(&G->adjList[i].data);//顶点信息
     G -> adjList[i].firstedge = NULL;//边表置为空表
   }
   for(k = 0; k < G -> numEdges; k++){
-    cout << "Input edge(vi vj) numNodes " <<endl;
+    cout << "输入边(vi,vj)上的顶点序号:\n" <<endl;
     scanf("%d,%d",&i,&j); /* 输入边(vi,vj)上的顶点序号 */
     e = (EdgeNode *)malloc(sizeof(EdgeNode));//申请边表节点
     e->adjvex=j;					/* 邻接序号为j */
     e->next=G->adjList[i].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */
     G->adjList[i].firstedge=e;		/* 将当前顶点的指针指向e */
-    ////////////////////////////////////////////////////////////////////////////
+
     e=(EdgeNode *)malloc(sizeof(EdgeNode)); /* 向内存申请空间,生成边表结点 */
     e->adjvex=i;					/* 邻接序号为i */
     e->next=G->adjList[j].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */
@@ -86,12 +130,13 @@ void CreateALGraph(GraphAdjList *G){
 }
 
 void CreateMGraph(MGraph *G){
+  // 无向网图的邻接矩阵表示
   int i,j,k,w;
-  cout<<"Please input num of vertexs"<<endl;
+  cout<<"请输入顶点数："<<endl;
   cin>>G -> numNodes;
-  cout<<"Please input the num of edges"<<endl;
+  cout<<"请输入边数："<<endl;
   cin>>G -> numEdges;
-  cout<<"Please input vertex values"<<endl;
+  cout<<"读入顶点信息，建立顶点表"<<endl;
   for (i = 0 ; i < G -> numNodes;++i) { //输入顶点信息建立顶点表
     cin>>G -> vexs[i];
   }
@@ -99,7 +144,7 @@ void CreateMGraph(MGraph *G){
 		for(j = 0;j <G->numNodes;j++)
 			G->arc[i][j]=INFINITY;	// 邻接矩阵初始化
   for (k = 0 ; k < G -> numEdges; k++) {
-    cout<<"Please input two subscript (i & j) and one weigh (w)"<<endl;
+    cout<<"输入边(vi,vj)上的下标i，下标j和权w："<<endl;
     cin>> i >> j >> w;
     G -> arc[i][j] = w;
     G -> arc[j][i] = w;//无向图，矩阵对称
@@ -109,8 +154,9 @@ void CreateMGraph(MGraph *G){
 int main(){
   // MGraph G;
   // CreateMGraph(&G);
-  GraphAdjList Q;
-  CreateALGraph(&Q);
-
+  MGraph G;
+  //CreateALGraph(&Q);
+  CreateMGraphDemo(&G);
+  MGDFSTraverse(G);
   return 0;
 }

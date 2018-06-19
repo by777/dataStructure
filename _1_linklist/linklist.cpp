@@ -111,7 +111,7 @@ void delElement(LNode* head, int x){
     p = q;
     q = q -> next;
   }
-  // 此处教材错误，若不判断先q是否为空将无法继续执行
+  // 此处参考教材错误，若不判断先q是否为空将无法继续执行
   if (q!=NULL&&q->data==x) {
     /* code */
     p -> next = q -> next;
@@ -201,9 +201,6 @@ LNode* mergelik(LNode *La, LNode *Lb) {
 
 int main() {
   /*
-
-
-
   int value;cin>>value;
   delElement(head, value);
   visitliklist(head);
