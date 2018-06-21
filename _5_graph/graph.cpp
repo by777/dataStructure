@@ -22,6 +22,7 @@ typedef struct EdgeNode{
 
 typedef struct VertexNode{
   //顶点表节点
+  int in;//顶点入度
   char data;//顶点域，存储顶点信息
   EdgeNode *firstedge;//边表头指针
 }VertexNode,AdjList[MAXVEX];
@@ -31,13 +32,47 @@ typedef struct{
   int numNodes,numEdges;//图中当前顶点数和边数
 }GraphAdjList;
 
+bool visited[MAXVEX];//邻接矩阵访问标志的数组
+
 void CreateMGraph(MGraph *G);//邻接矩阵
 void CreateALGraph(GraphAdjList *G);//邻接表建立
 void MGDFS(MGraph G,int i);
 void MGDFSTraverse(MGraph G);//邻接矩阵深度优先遍历
 void MGBFSTraverse(MGraph *G);//邻接矩阵广度优先遍历
 void CreateMGraphDemo(MGraph *G);//快速创建邻接矩阵Demo
-bool visited[MAXVEX];//邻接矩阵访问标志的数组
+void CreateALGraphDemo(MGraph G,GraphAdjList *GL);//利用邻接矩阵快速构建邻接表Demo
+
+void CreateALGraphDemo(MGraph G,GraphAdjList *GL){
+  int i ,j;
+  EdgeNode *e;
+  GL = (GraphAdjList *)malloc(sizeof(GraphAdjList));
+  GL -> numNodes = G.numNodes;
+  GL -> numEdges = G.numEdges;
+  for(i=0;i<G.numNodes;i++){
+    //读入顶点信息，建立顶点表
+    GL -> adjList[i].in = 0;
+    GL -> adjList[i].data = G.vexs[i];//顶点
+    GL -> adjList[i].firstedge = NULL;//将边表置为空表
+  }
+  for (i=0;i<G.numNodes;++i) {
+    // 建立边表
+    for (j=0;j<G.numNodes;++j) {
+      if (G.arc[i][j]==1) {
+        e = (EdgeNode*)malloc(sizeof(EdgeNode));
+        /*typedef struct EdgeNode{
+          //边表节点
+          int adjvex;//邻节点域，存储该顶点对应的下标
+          int info;//权值
+          struct EdgeNode *next;//指向下一个邻接点
+        }EdgeNode;*/
+        e -> adjvex = j;
+        e -> next = GL -> adjList[i].firstedge;
+        GL -> adjList[i].firstedge = e;
+        GL -> adjList[j].in++;
+      }
+    }
+  }
+}
 
 void MGBFSTraverse(MGraph *G){
   /* 图的广度优先搜索遍历（BFS）类似于树的层次遍历。
@@ -77,7 +112,6 @@ void MGBFSTraverse(MGraph *G){
     }
   }
 }
-
 
 void CreateMGraphDemo(MGraph *G){
   int i,j;
@@ -121,8 +155,8 @@ void CreateMGraphDemo(MGraph *G){
 			G->arc[j][i] =G->arc[i][j];
 		}
 	}
-
 }
+
 void MGDFS(MGraph G,int i){
   /*
   * 图的深度优先搜索遍历（DFS）类似于二叉树的先序遍历。
@@ -203,10 +237,12 @@ void CreateMGraph(MGraph *G){
 int main(){
   // MGraph G;
   // CreateMGraph(&G);
-  MGraph G;
+  MGraph MG;
   //CreateALGraph(&Q);
-  CreateMGraphDemo(&G);
+  CreateMGraphDemo(&MG);
   //MGDFSTraverse(G);
-  MGBFSTraverse(&G);
+  MGBFSTraverse(&MG);
+  GraphAdjList* GLDemo = NULL;
+  CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
   return 0;
 }
