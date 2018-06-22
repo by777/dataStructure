@@ -15,6 +15,7 @@
 * 会适时穿插面试算法和新题型
 * 每日更新至少一个方法
 
+
 # CATALOG
 
 * 线性表及基本操作
@@ -57,6 +58,8 @@
   * 稳定性分析
 * 算法分析
 * to be continued...
+
+> 若中文乱码： g++ -Wall -fexec-charset=GBK -finput-charset=UTF-8 $infile -o $outfile
 
 ###### 本仓库创建于2018年5月29日
 ---------
