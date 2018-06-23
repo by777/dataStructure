@@ -44,6 +44,7 @@ void CreateALGraphDemo(MGraph G,GraphAdjList *&GL);//利用邻接矩阵快速构
 void ALDFS(GraphAdjList *GL,int i);
 void ALDFSTraverse(GraphAdjList *GL);//邻接表的深度优先递归算法
 void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
+//void MiniSpanTree_Prim(MGraph G);//使用Prime最小代价生成树
 
 void ALBFSTraverse(GraphAdjList *GL){
   cout<<"\n"<<"现在广度优先遍历邻接表"<<endl;
