@@ -5,6 +5,7 @@
 @Last modified by:   XU BAI
 @Last modified time: 25/06/18
 -->
+
 # 考研数据结构练习题目
 
 ![build status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)     ![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)
@@ -17,6 +18,11 @@
 
 # CATALOG
 
+- <details><summary>线性表及其操作</summary>
+
+  - `链表`: _Add or remove space before '(' of 'if', 'for', 'switch', 'while', etc._
+  - `sp_compare`: _Add or remove space around compare operator '<', '>', '==', etc_
+</details>
 -   线性表及基本操作
     -   链表的增删合逆
     -   **附加题（栈和链表综合）**
