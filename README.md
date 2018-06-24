@@ -18,9 +18,10 @@
 
 # CATALOG
 
-- <details><summary>add/remove spaces</summary>
+- <details><summary>线性表及基本操作</summary>
 
   - `链表`:链表的增删合逆
+  - `顺序表`:顺序表的增删合逆
 
 </details>
 
