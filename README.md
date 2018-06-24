@@ -18,11 +18,13 @@
 
 # CATALOG
 
-- <details><summary>线性表及其操作</summary>
+- <details><summary>add/remove spaces</summary>
 
-  - `链表`: _Add or remove space before '(' of 'if', 'for', 'switch', 'while', etc._
+  - `sp_before_sparen`: _Add or remove space before '(' of 'if', 'for', 'switch', 'while', etc._
   - `sp_compare`: _Add or remove space around compare operator '<', '>', '==', etc_
 </details>
+
+
 -   线性表及基本操作
     -   链表的增删合逆
     -   **附加题（栈和链表综合）**
