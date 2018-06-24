@@ -20,8 +20,8 @@
 
 - <details><summary>add/remove spaces</summary>
 
-  - `sp_before_sparen`: _Add or remove space before '(' of 'if', 'for', 'switch', 'while', etc._
-  - `sp_compare`: _Add or remove space around compare operator '<', '>', '==', etc_
+  - `链表`:链表的增删合逆
+
 </details>
 
 
