@@ -1,18 +1,32 @@
 /* 题目：两个链表的第一个公共节点
  * 输入两个链表，找出他们的第一个公共节点。
  * 链表节点已经定义
+ *
+ *          本题摘自《剑指offer》
  */
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
-
 typedef struct ListNode {
         int m_nKey;
         ListNode *m_pNext;
 }ListNode;
-
-
 void PublicNode(ListNode *pHead1, ListNode *pHead2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*================================Key============================*/
 void PublicNode(ListNode *pHead1, ListNode *pHead2){
         /*
          * 常规的蛮力法时间复杂度为O(mn)，不是一个好的算法
