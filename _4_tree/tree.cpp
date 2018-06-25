@@ -28,15 +28,36 @@ string str = "ABDH#K###E##CFI###G#J##";//注意叶子节点以空收尾
 int index = 0;
 
 status initBTree(BTNode *T);
-void createBTree(BTNode *&T);
+int getDepth(BTNode *T);  // 计算二叉树深度
+void createBTreeDemo(BTNode *&T);//快速创建一个二叉树
 void PreOrderTraverse(BTNode *T);
 void levelTraverse(BTNode *T);//层次遍历二叉树
 void visit(BTNode *q);
 void inBiThreadTree(BiThrNode *T,BiThrNode *&pre);//二叉树的中序线索化
-void createInBiThreadTree(BiThrNode *root);//通过中序遍历建立线索二叉树
+void createInBiThreadTree(BiThrNode *root);//// 通过中序遍历建立中序线索二叉树的主程序
 BiThrNode *first(BiThrNode *p);
 BiThrNode *next(BiThrNode *p);
 void inBiThrTraverse(BiThrNode *root);//遍历中序线索二叉树
+void createBThTreeDemo(BiThrNode *&T);//快速创建未线索化的二叉树
+void createBThTreeDemo(BiThrNode *&T){
+        // 按照前序输入构造待线索化二叉树
+        //cout<<"\n生成了一个还未线索化的二叉树"<<endl;
+        char ch = str[index++];
+        if (ch == '#') {
+                T = NULL;
+        }
+        else{
+                T =(BiThrNode*) malloc(sizeof(BiThrNode));
+                if(!T) exit(-1);
+                T->data = ch;//根节点
+                createBThTreeDemo(*&T->lChild);
+                if(T->lChild) /* 有左孩子 */
+                        T->lTag=0;
+                createBThTreeDemo(*&T->rChild);//递归创建子树
+                if(T->rChild) /* 有右孩子 */
+                        T->rTag=0;
+        }
+}
 
 BiThrNode *first(BiThrNode *p){
         // 求以p为根的中序线索二叉树中，中序序列下的第一个节点
@@ -138,7 +159,7 @@ void levelTraverse(BTNode *T){
         }
 }
 
-int getDepth(BTNode *T);  // 计算二叉树深度
+
 
 int getDepth(BTNode *T){
         int LD,RD;
@@ -161,7 +182,7 @@ void PreOrderTraverse(BTNode *T){
         //cout<<T -> data;后
 }
 
-void createBTree(BTNode *&T){
+void createBTreeDemo(BTNode *&T){
         // 按照前序输入构造二叉树
         //cout<<"create"<<endl;
         char ch = str[index++];
@@ -172,8 +193,8 @@ void createBTree(BTNode *&T){
                 T =(BTNode*) malloc(sizeof(BTNode));
                 if(!T) exit(-1);
                 T->data = ch;//根节点
-                createBTree(*&T->lChild);
-                createBTree(*&T->rChild);//递归创建子树
+                createBTreeDemo(*&T->lChild);
+                createBTreeDemo(*&T->rChild);//递归创建子树
         }
 }
 
@@ -183,14 +204,18 @@ status initBTree(BTNode *T){
 }
 
 int main() {
-        BTNode *T;
-        initBTree(T);
-        createBTree(T);
-        cout<<"PreOrderTraverse"<<endl;
-        PreOrderTraverse(T);
-        cout<<"DEPTH"<<endl;
-        cout<<getDepth(T);
-        cout<<"levelTraverse"<<endl;
-        levelTraverse(T);
+        // BTNode *T;
+        // initBTree(T);
+        // createBTreeDemo(T);
+        // cout<<"PreOrderTraverse"<<endl;
+        // PreOrderTraverse(T);
+        // cout<<"DEPTH"<<endl;
+        // cout<<getDepth(T);
+        // cout<<"levelTraverse"<<endl;
+        // levelTraverse(T);
+        BiThrNode *biTh;
+        createBThTreeDemo(biTh);
+        createInBiThreadTree(biTh);
+        inBiThrTraverse(biTh);
         return 0;
 }
