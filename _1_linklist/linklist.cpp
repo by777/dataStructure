@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#define maxSize 1000
 using namespace std;
 
 typedef struct LNode {
@@ -15,7 +16,13 @@ typedef struct LNode {
         struct LNode* next;
 }LNode;
 
-LNode* createliklist(void);//尾插法
+typedef struct {
+        //线性表的静态链表存储结构
+        char data;
+        int cur;//游标（cursor），为0时表示无指向
+}Component,StaticLinkList[maxSize];
+
+LNode* createliklist (void);//尾插法
 LNode* createliklistH(void);//头插法
 LNode* chooseCreate(int choose);//主选择
 LNode* createliklistManu(int a[], int len);//手工创建链表
@@ -23,6 +30,33 @@ LNode* mergelik(LNode *head_1,LNode *head_2);//合并有序链表
 void visitliklist(LNode *head);//遍历
 void delElement(LNode* head, int x);//按值删除
 void inversion(LNode *head);//逆置
+int initStaticList(StaticLinkList space);
+int mallocSSL(StaticLinkList space);
+void freeSSL(StaticLinkList space,int k);//将下标为k的空闲节点回收到备用链表
+void freeSSL(StaticLinkList space,int k){
+        space[k].cur = space[0].cur;
+        space[0].cur = k;
+}
+int initStaticList(StaticLinkList space){
+        // 将一维数组space中各分量链成一个备用链表，space[0].cur为头指针，‘0’表示空指针
+        int i;
+        for (i = 0; i < maxSize - 1; i++)
+                space[i].cur = i + 1;
+        space[maxSize-1].cur = 0;// 目前静态链表为空，最后一个元素的cur为0
+        return 0;
+}
+
+int mallocSSL(StaticLinkList space){
+        // 若备用空间链表为空则返回分配的节点下标，否则返回0
+        int i = space[0].cur;
+        if (space[0].cur) {
+                space[0].cur = space[i].cur;
+                /* 由于要拿出一个分量来使用了， */
+                /* 所以我们就得把它的下一个 */
+                /* 分量用来做备用 */
+        }
+        return i;
+}
 
 LNode* createliklistH(void){
         LNode* head, *p;
