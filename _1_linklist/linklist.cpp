@@ -30,14 +30,81 @@ LNode* mergelik(LNode *head_1,LNode *head_2);//合并有序链表
 void visitliklist(LNode *head);//遍历
 void delElement(LNode* head, int x);//按值删除
 void inversion(LNode *head);//逆置
-int initStaticList(StaticLinkList space);
-int mallocSSL(StaticLinkList space);
-void freeSSL(StaticLinkList space,int k);//将下标为k的空闲节点回收到备用链表
-void freeSSL(StaticLinkList space,int k){
+int initStaticList(StaticLinkList &space);
+int mallocSSL(StaticLinkList &space);
+void freeSSL(StaticLinkList &space,int k);//将下标为k的空闲节点回收到备用链表
+int staticListLength(StaticLinkList L);// 获取静态链表长度
+int staticListInsert(StaticLinkList &L,int i,char e);
+int staticListDel(StaticLinkList &L,int i);  //删除在L中第i个数据元素
+int staticListTraverse(StaticLinkList L);// 遍历静态链表
+void staticListTest1();// 静态链表的测试用例
+
+int staticListTraverse(StaticLinkList L){
+        int j = 0;
+        int i = L[maxSize-1].cur;
+        while (i) {
+                cout<<L[i].data;
+                i = L[i].cur;
+                j++;
+        }
+        return j;
+        cout<<endl;
+        return 0;
+}
+
+int staticListDel(StaticLinkList &L,int i){
+        //删除在L中第i个数据元素
+        int k,j;
+        if (i < 1 || i > staticListLength(L)) {
+                return -1;
+        }
+        k = maxSize -1;
+        for (j = 1; j <= i -1; j++) {
+                k = L[k].cur;
+        }
+        j = L[k].cur;
+        L[k].cur = L[j].cur;
+        freeSSL(L,j);
+        return 0;
+}
+
+int staticListInsert(StaticLinkList &L,int i,char e){
+        int k,j,l;
+        k = maxSize - 1;//k是最后一个元素的下标
+        if (i < 1 || i > staticListLength(L) + 1) {
+                return -1;
+        }
+        j = mallocSSL(L);//获取空闲分量的下标
+        if (j) {
+                L[j].data=e;
+                for (l = 1; l <= i -1; l++) {
+                        // 找到第i个元素之前的位置
+                        k = L[k].cur;
+                }
+                L[j].cur = L[k].cur;//将第i个元素之前的cur赋值给新元素的cur
+                L[k].cur = j;//将新元素的下标赋值给第i个元素之前的元素cur
+                return 0;
+        }
+        return -1;
+}
+
+int staticListLength(StaticLinkList L){
+        int j = 0;
+        int i = L[maxSize-1].cur;
+        while (i) {
+                i = L[i].cur;
+                j++;
+        }
+        return j;
+}
+
+void freeSSL(StaticLinkList &space,int k){
+        //将下标为k的空闲结点回收到备用链表
         space[k].cur = space[0].cur;
         space[0].cur = k;
 }
-int initStaticList(StaticLinkList space){
+
+int initStaticList(StaticLinkList &space){
         // 将一维数组space中各分量链成一个备用链表，space[0].cur为头指针，‘0’表示空指针
         int i;
         for (i = 0; i < maxSize - 1; i++)
@@ -46,7 +113,7 @@ int initStaticList(StaticLinkList space){
         return 0;
 }
 
-int mallocSSL(StaticLinkList space){
+int mallocSSL(StaticLinkList &space){
         // 若备用空间链表为空则返回分配的节点下标，否则返回0
         int i = space[0].cur;
         if (space[0].cur) {
@@ -232,12 +299,34 @@ LNode* mergelik(LNode *La, LNode *Lb) {
         return Lc;
 }
 
+void staticListTest1(){
+        StaticLinkList L;
+        initStaticList(L);
+        int i;
+        i=staticListInsert(L,1,'F');
+        i=staticListInsert(L,1,'E');
+        i=staticListInsert(L,1,'D');
+        i=staticListInsert(L,1,'B');
+        i=staticListInsert(L,1,'A');
+        printf("\n在L的表头依次插入FEDBA后：\n");
+        staticListTraverse(L);
+        i=staticListInsert(L,3,'C');
+        printf("\n在L的“B”与“D”之间插入“C”后：\n");
+        staticListTraverse(L);
+        i=staticListDel(L,1);
+        printf("\n在L的删除“A”后：\n");
+        staticListTraverse(L);
+        printf("\n");
+}
+
 int main() {
         /*
            int value;cin>>value;
            delElement(head, value);
            visitliklist(head);
          */
+
+
         LNode* head = chooseCreate();
         visitliklist(head); cout<<endl;
 
