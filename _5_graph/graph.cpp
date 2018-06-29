@@ -47,6 +47,10 @@ void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
 void MiniSpanTree_Prim(MGraph G);//使用Prime最小代价生成树
 
 void MiniSpanTree_Prim(MGraph G){
+        /* 普里姆算法生成最小代价生成树
+           普里姆算法思想：
+           从图中任取出一个顶点，将它当成一棵树
+         */
 
 }
 
