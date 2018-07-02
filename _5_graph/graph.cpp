@@ -62,7 +62,7 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
          *  1. 从候选边中挑出权值最小的边输出，并将与该边另一端相接的顶点v并入到生成树中
          * ·2。考察所有剩余顶点V_i，如果（V，V_i）的权值比lowcost[V_i]小，则用(V,V_i)的权值更新lowcost[V_i]
          */
-        //=======================BUG在此===================
+        //=======================BUG在此：DEMO建立错误：待修复==================
         int lowcost[maxSize],vset[maxSize],v;
         int i,min,j,k;
         for (i = 1; i < G.numNodes; ++i ) {
