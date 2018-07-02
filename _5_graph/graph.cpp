@@ -44,9 +44,9 @@ void CreateALGraphDemo(MGraph G,GraphAdjList *&GL);//利用邻接矩阵快速构
 void ALDFS(GraphAdjList *GL,int i);
 void ALDFSTraverse(GraphAdjList *GL);//邻接表的深度优先递归算法
 void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
-void MiniSpanTree_Prim(MGraph G);//使用Prime最小代价生成树
+void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成树
 
-void MiniSpanTree_Prim(MGraph G){
+void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         /* 普里姆算法生成最小代价生成树
          * 普里姆算法思想：
          * 从图中任取出一个顶点，将它当成一棵树然后从与这棵树相接的边中选取一条最短（权值最小）
@@ -62,6 +62,34 @@ void MiniSpanTree_Prim(MGraph G){
          *  1. 从候选边中挑出权值最小的边输出，并将与该边另一端相接的顶点v并入到生成树中
          * ·2。考察所有剩余顶点V_i，如果（V，V_i）的权值比lowcost[V_i]小，则用(V,V_i)的权值更新lowcost[V_i]
          */
+        //=======================BUG在此===================
+        int lowcost[maxSize],vset[maxSize],v;
+        int i,min,j,k;
+        for (i = 1; i < G.numNodes; ++i ) {
+                lowcost[i] = G.arc[v0][i];//顶点v0到其余各顶点的距离
+                vset[i] = 0;
+        }
+        vset[v0] = 1;//将v0并入树中
+        sum = 0;
+        for (i= 1; i < G.numNodes; ++i) {
+                min = INFINITY;
+                // 找出候选边中的最小者
+                for(j = 1; j < G.numNodes; ++j) {
+                        if (vset[j]==0&&lowcost[j]<min) {
+                                //选出当前生成树到其余各顶点最短边中的一条
+                                min = lowcost[j];
+                                k = j;
+                        }
+                        printf("(%d, %d)\n", G.arc[k], k);/* 打印当前顶点边中权值最小的边 */
+                        vset[k] = 1;
+                        v = k;
+                        sum += min;//sum记录了最小生成树的权值
+                        //以刚并入的顶点v为媒介更新候选边
+                        for(j = 1; j<G.numNodes; ++j)
+                                if(vset[j]==0&&G.arc[v][j]<lowcost[j])
+                                        lowcost[j] = G.arc[v][j]; //过程2）
+                }
+        }
 
 }
 
@@ -324,5 +352,9 @@ int main(){
         CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
         ALDFSTraverse(GLDemo);
         ALBFSTraverse(GLDemo);
+        int sum = 0;
+        int v0 = 0;
+        MiniSpanTree_Prim(MG,v0,sum);
+        cout<<"最小代价："<<sum<<endl;
         return 0;
 }
