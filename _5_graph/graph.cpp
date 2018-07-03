@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#define INFINITY 65535
+#define INFINITY 5535
 #define maxSize 100
 // 最大顶点数
 #define MAXVEX 100
@@ -65,31 +65,37 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         //=======================BUG在此：DEMO建立错误：待修复==================
         int lowcost[maxSize],vset[maxSize],v;
         int i,min,j,k;
-        for (i = 1; i < G.numNodes; ++i ) {
+        v = v0;
+
+        //vset[v0] = 1;//将v0并入树中
+        for (i = 0; i < G.numNodes; ++i ) {
                 lowcost[i] = G.arc[v0][i];//顶点v0到其余各顶点的距离
+                cout<<G.arc[v0][i]<<" ";
                 vset[i] = 0;
         }
-        vset[v0] = 1;//将v0并入树中
+        vset[v] = 1;
         sum = 0;
-        for (i= 1; i < G.numNodes; ++i) {
+        for (i= 0; i < G.numNodes - 1; ++i) {
                 min = INFINITY;
                 // 找出候选边中的最小者
-                for(j = 1; j < G.numNodes; ++j) {
+                for(j = 0; j < G.numNodes; ++j) {
                         if (vset[j]==0&&lowcost[j]<min) {
                                 //选出当前生成树到其余各顶点最短边中的一条
                                 min = lowcost[j];
                                 k = j;
                         }
-                        printf("(%d, %d)\n", G.arc[k], k);/* 打印当前顶点边中权值最小的边 */
+                        //printf("(%d, %d)\n", G.arc[k], k);/* 打印当前顶点边中权值最小的边 */
                         vset[k] = 1;
                         v = k;
+                        //cout<<"min:"<<min;
                         sum += min;//sum记录了最小生成树的权值
                         //以刚并入的顶点v为媒介更新候选边
-                        for(j = 1; j<G.numNodes; ++j)
+                        for(j = 0; j<G.numNodes; ++j)
                                 if(vset[j]==0&&G.arc[v][j]<lowcost[j])
                                         lowcost[j] = G.arc[v][j]; //过程2）
                 }
         }
+
 
 }
 
@@ -236,24 +242,27 @@ void CreateMGraphDemo(MGraph *G){
         // 初始化图
         for (i = 0; i< G->numNodes; i++) {
                 for (j = 0; j < G->numNodes; j++) {
-                        G->arc[i][j]=0;
+                        if (i==j)
+                                G->arc[i][j]=0;
+                        else
+                                G->arc[i][j] = G->arc[j][i] = INFINITY - 1;
                 }
         }
-        G->arc[0][1]=1;
-        G->arc[0][5]=1;
-        G->arc[1][2]=1;
-        G->arc[1][8]=1;
-        G->arc[1][6]=1;
-        G->arc[2][3]=1;
-        G->arc[2][8]=1;
-        G->arc[3][4]=1;
-        G->arc[3][7]=1;
-        G->arc[3][6]=1;
-        G->arc[3][8]=1;
-        G->arc[4][5]=1;
-        G->arc[4][7]=1;
-        G->arc[5][6]=1;
-        G->arc[6][7]=1;
+        G->arc[0][1]=10;
+        G->arc[0][5]=11;
+        G->arc[1][2]=18;
+        G->arc[1][8]=12;
+        G->arc[1][6]=16;
+        G->arc[2][8]=8;
+        G->arc[2][3]=22;
+        G->arc[3][8]=21;
+        G->arc[3][6]=24;
+        G->arc[3][7]=16;
+        G->arc[3][4]=20;
+        G->arc[4][7]=7;
+        G->arc[4][5]=26;
+        G->arc[5][6]=17;
+        G->arc[6][7]=19;
         for(i = 0; i < G->numNodes; i++)
         {
                 for(j = i; j < G->numNodes; j++)
@@ -348,10 +357,10 @@ int main(){
         CreateMGraphDemo(&MG);
         //MGDFSTraverse(G);
         //MGBFSTraverse(&MG);
-        GraphAdjList* GLDemo = NULL;
-        CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
-        ALDFSTraverse(GLDemo);
-        ALBFSTraverse(GLDemo);
+        //GraphAdjList* GLDemo = NULL;
+        //CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
+        //ALDFSTraverse(GL//Demo);
+        //ALBFSTraverse(GLDemo);
         int sum = 0;
         int v0 = 0;
         MiniSpanTree_Prim(MG,v0,sum);
