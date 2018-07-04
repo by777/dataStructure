@@ -45,6 +45,93 @@ void ALDFS(GraphAdjList *GL,int i);
 void ALDFSTraverse(GraphAdjList *GL);//邻接表的深度优先递归算法
 void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成树
+void CreateMGraphD(MGraph *G);
+void MiniSpanTree_PrimD(MGraph &G);
+void MiniSpanTree_PrimD(MGraph &G)
+{
+        int min, i, j, k;
+        int adjvex[MAXVEX]; /* 保存相关顶点下标 */
+        int lowcost[MAXVEX]; /* 保存相关顶点间边的权值 */
+        lowcost[0] = 0;/* 初始化第一个权值为0，即v0加入生成树 */
+        /* lowcost的值为0，在这里就是此下标的顶点已经加入生成树 */
+        adjvex[0] = 0; /* 初始化第一个顶点下标为0 */
+        for(i = 1; i < G.numNodes; i++) /* 循环除下标为0外的全部顶点 */
+        {
+                lowcost[i] = G.arc[0][i]; /* 将v0顶点与之有边的权值存入数组 */
+                adjvex[i] = 0; /* 初始化都为v0的下标 */
+        }
+        for(i = 1; i < G.numNodes; i++)
+        {
+                min = INFINITY; /* 初始化最小权值为∞， */
+                /* 通常设置为不可能的大数字如32767、65535等 */
+                j = 1; k = 0;
+                while(j < G.numNodes) /* 循环全部顶点 */
+                {
+                        if(lowcost[j]!=0 && lowcost[j] < min)/* 如果权值不为0且权值小于min */
+                        {
+                                min = lowcost[j]; /* 则让当前权值成为最小值 */
+                                k = j; /* 将当前最小值的下标存入k */
+                        }
+                        j++;
+                }
+                printf("(%d, %d)\n", adjvex[k], k);/* 打印当前顶点边中权值最小的边 */
+                lowcost[k] = 0;/* 将当前顶点的权值设置为0,表示此顶点已经完成任务 */
+                for(j = 1; j < G.numNodes; j++) /* 循环所有顶点 */
+                {
+                        if(lowcost[j]!=0 && G.arc[k][j] < lowcost[j])
+                        {/* 如果下标为k顶点各边权值小于此前这些顶点未被加入生成树权值 */
+                                lowcost[j] = G.arc[k][j];/* 将较小的权值存入lowcost相应位置 */
+                                adjvex[j] = k; /* 将下标为k的顶点存入adjvex */
+                        }
+                }
+        }
+}
+
+void CreateMGraphD(MGraph *G)/* 构件图 */
+{
+        int i, j;
+
+        /* printf("请输入边数和顶点数:"); */
+        G->numEdges=15;
+        G->numNodes=9;
+
+        for (i = 0; i < G->numNodes; i++)/* 初始化图 */
+        {
+                for ( j = 0; j < G->numNodes; j++)
+                {
+                        if (i==j)
+                                G->arc[i][j]=0;
+                        else
+                                G->arc[i][j] = G->arc[j][i] = INFINITY;
+                }
+        }
+
+        G->arc[0][1]=10;
+        G->arc[0][5]=11;
+        G->arc[1][2]=18;
+        G->arc[1][8]=12;
+        G->arc[1][6]=16;
+        G->arc[2][8]=8;
+        G->arc[2][3]=22;
+        G->arc[3][8]=21;
+        G->arc[3][6]=24;
+        G->arc[3][7]=16;
+        G->arc[3][4]=20;
+        G->arc[4][7]=7;
+        G->arc[4][5]=26;
+        G->arc[5][6]=17;
+        G->arc[6][7]=19;
+
+        for(i = 0; i < G->numNodes; i++)
+        {
+                for(j = i; j < G->numNodes; j++)
+                {
+                        G->arc[j][i] =G->arc[i][j];
+                }
+        }
+
+}
+
 
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         /* 普里姆算法生成最小代价生成树
@@ -355,6 +442,8 @@ int main(){
         MGraph MG;
         //CreateALGraph(&Q);
         CreateMGraphDemo(&MG);
+        MiniSpanTree_PrimD(MG);
+        CreateMGraphD(&MG);
         //MGDFSTraverse(G);
         //MGBFSTraverse(&MG);
         //GraphAdjList* GLDemo = NULL;
@@ -363,7 +452,7 @@ int main(){
         //ALBFSTraverse(GLDemo);
         int sum = 0;
         int v0 = 0;
-        MiniSpanTree_Prim(MG,v0,sum);
+        MiniSpanTree_PrimD(MG);
         cout<<"最小代价："<<sum<<endl;
         return 0;
 }
