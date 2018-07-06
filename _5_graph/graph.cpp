@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#define INFINITY 5535
+#define INFINITY 65535
 #define maxSize 100
 // 最大顶点数
 #define MAXVEX 100
@@ -32,6 +32,11 @@ typedef struct {
         int numNodes,numEdges;//图中当前顶点数和边数
 }GraphAdjList;
 
+typedef struct {
+        int a,b;//a和b为一条边所连的两个顶点
+        int w;//边的权值
+}Road;
+
 bool visited[MAXVEX];//邻接矩阵访问标志的数组
 
 void CreateMGraph(MGraph *G);//邻接矩阵
@@ -45,7 +50,29 @@ void ALDFS(GraphAdjList *GL,int i);
 void ALDFSTraverse(GraphAdjList *GL);//邻接表的深度优先递归算法
 void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成树
+void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
+void MiniSpanTree_Kruskal(MGraph G){
+        /* 主要思想：每次找出候选边中最小权重的值，并入到生成树中
+         * 执行过程：将图中边按权值从小到大排序，然后从最小边开始扫描各边，并检查当前边是否
+         * 为候选边，即否该边的并入会构成回路，如果不构成回路，则将该边并入当前生成树中。
+         */
+        int i,j;
+        int k = 0;
+        int parent[MAXVEX]; //定义一数组用来判断是否形成环路
+        Road roads[MAXVEX];//边集数组
+        // 构建边集数组并排序
+        for(i = 0; i<G.numNodes -1; i++) {
+                for(j = i+1; j < G.numNodes; j++) {
+                        if (G.arc[i][j]<INFINITY) {
+                                roads[k].a=i;
+                                roads[k].b=j;
+                                roads[k].w=G.arc[i][j];
+                                k++;
+                        }
+                }
+        }
 
+}
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         /* 普里姆算法生成最小代价生成树
          * 普里姆算法思想：
