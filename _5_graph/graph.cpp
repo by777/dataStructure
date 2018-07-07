@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#define INFINITY 65535
+#define INF 65535
 #define maxSize 100
 // 最大顶点数
 #define MAXVEX 100
@@ -51,24 +51,80 @@ void ALDFSTraverse(GraphAdjList *GL);//邻接表的深度优先递归算法
 void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成树
 void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
+void sort(Road roads[],MGraph &G);
+void Swapn(Road *roads,int i, int j);
+
+void Swapn(Road *roads,int i, int j)
+{
+        int temp;
+        temp = roads[i].a;
+        roads[i].a = roads[j].b;
+        roads[j].b = temp;
+        temp = roads[i].b;
+        roads[i].b = roads[j].b;
+        roads[j].b = temp;
+        temp = roads[i].w;
+        roads[i].w = roads[j].w;
+        roads[j].w = temp;
+}
+
+int find(int* parent,int f){
+        while (parent[f]>0) {
+                f=parent[f];
+        }
+        return f;
+}
+
+void sort(Road roads[],MGraph &G){
+        //对权值进行排序
+        int i, j;
+        for ( i = 0; i < G.numEdges; i++)
+        {
+                for ( j = i + 1; j < G.numEdges; j++)
+                {
+                        if (roads[i].w > roads[j].w)
+                        {
+                                Swapn(roads, i, j);
+                        }
+                }
+        }
+        printf("权排序之后的为:\n");
+        for (i = 0; i < G.numEdges; i++)
+        {
+                printf("(%d, %d) %d\n", roads[i].a, roads[i].b, roads[i].w);
+        }
+}
 void MiniSpanTree_Kruskal(MGraph G){
         /* 主要思想：每次找出候选边中最小权重的值，并入到生成树中
          * 执行过程：将图中边按权值从小到大排序，然后从最小边开始扫描各边，并检查当前边是否
          * 为候选边，即否该边的并入会构成回路，如果不构成回路，则将该边并入当前生成树中。
          */
-        int i,j;
+        int i,j,m,n;
         int k = 0;
         int parent[MAXVEX]; //定义一数组用来判断是否形成环路
         Road roads[MAXVEX];//边集数组
         // 构建边集数组并排序
         for(i = 0; i<G.numNodes -1; i++) {
                 for(j = i+1; j < G.numNodes; j++) {
-                        if (G.arc[i][j]<INFINITY) {
+                        if (G.arc[i][j]<INF) {
                                 roads[k].a=i;
                                 roads[k].b=j;
                                 roads[k].w=G.arc[i][j];
                                 k++;
                         }
+                }
+        }
+        sort(roads,G);
+        for (i = 0; i<G.numNodes; i++ ) {
+                parent[i]=0;//初始化数组为0
+        }
+        cout<<"打印最小生成树："<<endl;
+        for(i=0; i<G.numEdges; i++) {
+                n = find(parent,roads[i].a);
+                m = find(parent,roads[i].b);
+                if (m!=n) {
+                        parent[n]=m;//将此边的结尾顶点放入下标为起点的parent中
+                        printf("(%d, %d) %d\n", roads[i].a, roads[i].b, roads[i].w);
                 }
         }
 
@@ -102,7 +158,7 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         vset[v] = 1;
         sum = 0;
         for (i= 0; i < G.numNodes - 1; ++i) {
-                min = INFINITY;
+                min = INF;
                 for(j = 0; j < G.numNodes; ++j) // 找出候选边中的最小者
                         if (vset[j]==0&&lowcost[j]<min) { //选出当前生成树到其余各顶点最短边中的一条
                                 min = lowcost[j];
@@ -267,7 +323,7 @@ void CreateMGraphDemo(MGraph *G){
                         if (i==j)
                                 G->arc[i][j]=0;
                         else
-                                G->arc[i][j] = G->arc[j][i] = INFINITY - 1;
+                                G->arc[i][j] = G->arc[j][i] = INF - 1;
                 }
         }
         G->arc[0][1]=10;
@@ -362,7 +418,7 @@ void CreateMGraph(MGraph *G){
         }
         for(i = 0; i <G->numNodes; i++)
                 for(j = 0; j <G->numNodes; j++)
-                        G->arc[i][j]=INFINITY; // 邻接矩阵初始化
+                        G->arc[i][j]=INF; // 邻接矩阵初始化
         for (k = 0; k < G->numEdges; k++) {
                 cout<<"输入边(vi,vj)上的下标i，下标j和权w："<<endl;
                 cin>> i >> j >> w;
@@ -389,5 +445,6 @@ int main(){
         int v0 = 0;
         MiniSpanTree_Prim(MG,v0,sum);
         cout<<"最小代价："<<sum<<endl;
+        //MiniSpanTree_Kruskal(MG);好像有错
         return 0;
 }
