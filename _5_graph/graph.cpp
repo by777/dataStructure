@@ -59,7 +59,7 @@ void Swapn(Road *roads,int i, int j)
         int temp;
         temp = roads[i].a;
         roads[i].a = roads[j].b;
-        roads[j].b = temp;
+        roads[j].a = temp;
         temp = roads[i].b;
         roads[i].b = roads[j].b;
         roads[j].b = temp;
@@ -69,9 +69,11 @@ void Swapn(Road *roads,int i, int j)
 }
 
 int find(int* parent,int f){
+        //查找连线顶点的尾部下标
         while (parent[f]>0) {
                 f=parent[f];
         }
+        //cout<<f<<" ";
         return f;
 }
 
@@ -94,6 +96,7 @@ void sort(Road roads[],MGraph &G){
                 printf("(%d, %d) %d\n", roads[i].a, roads[i].b, roads[i].w);
         }
 }
+
 void MiniSpanTree_Kruskal(MGraph G){
         /* 主要思想：每次找出候选边中最小权重的值，并入到生成树中
          * 执行过程：将图中边按权值从小到大排序，然后从最小边开始扫描各边，并检查当前边是否
@@ -122,6 +125,7 @@ void MiniSpanTree_Kruskal(MGraph G){
         for(i=0; i<G.numEdges; i++) {
                 n = find(parent,roads[i].a);
                 m = find(parent,roads[i].b);
+
                 if (m!=n) {
                         parent[n]=m;//将此边的结尾顶点放入下标为起点的parent中
                         printf("(%d, %d) %d\n", roads[i].a, roads[i].b, roads[i].w);
@@ -129,6 +133,7 @@ void MiniSpanTree_Kruskal(MGraph G){
         }
 
 }
+
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
         /* 普里姆算法生成最小代价生成树
          * 普里姆算法思想：
@@ -323,7 +328,7 @@ void CreateMGraphDemo(MGraph *G){
                         if (i==j)
                                 G->arc[i][j]=0;
                         else
-                                G->arc[i][j] = G->arc[j][i] = INF - 1;
+                                G->arc[i][j] = G->arc[j][i] = INF;
                 }
         }
         G->arc[0][1]=10;
@@ -441,10 +446,10 @@ int main(){
         //CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
         //ALDFSTraverse(GL//Demo);
         //ALBFSTraverse(GLDemo);
-        int sum = 0;
-        int v0 = 0;
-        MiniSpanTree_Prim(MG,v0,sum);
-        cout<<"最小代价："<<sum<<endl;
-        //MiniSpanTree_Kruskal(MG);好像有错
+        //int sum = 0;
+        //int v0 = 0;
+        //MiniSpanTree_Prim(MG,v0,sum);
+        //cout<<"最小代价："<<sum<<endl;
+        MiniSpanTree_Kruskal(MG);//好像有错
         return 0;
 }
