@@ -52,13 +52,13 @@ void ALBFSTraverse(GraphAdjList *GL);//邻接表的广度优先递归算法
 void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成树
 void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
-void Swapn(Road *roads,int i, int j);
+void Swapn(Road roads[],int i, int j);
 
-void Swapn(Road *roads,int i, int j)
+void Swapn(Road roads[],int i, int j)
 {
         int temp;
         temp = roads[i].a;
-        roads[i].a = roads[j].b;
+        roads[i].a = roads[j].a;
         roads[j].a = temp;
         temp = roads[i].b;
         roads[i].b = roads[j].b;
