@@ -57,6 +57,7 @@ void InsertSort(int R[],int n){
                 R[j+1]=temp;//找到插入位置，将temp暂存的待排关键字插入
         }
 }
+
 int main() {
         /* code */
         int R[6] = {1,3,14,12,2,3};
