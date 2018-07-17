@@ -38,6 +38,8 @@ typedef struct {
 }Road;
 
 bool visited[MAXVEX];//邻接矩阵访问标志的数组
+typedef int Patharc[MAXVEX];    //用于存储最短路径下标的数组
+typedef int ShortPathTable[MAXVEX];//用于存储到各点最短路径的权值和
 
 void CreateMGraph(MGraph *G);//邻接矩阵
 void CreateALGraph(GraphAdjList *G);//邻接表建立
@@ -53,9 +55,27 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成
 void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
-
-void Swapn(Road roads[],int i, int j)
-{
+void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D);
+void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D){
+        /* 采用迪杰斯特拉算法求图中某一顶点到其余各顶点的最短路径
+         * 执行过程：
+         * 1） 从当前的dist[]数组中选出最小值，假设为dist[V_u]，将set[V_u]设置为1，表示
+         *     当前新并入的节点为V_u。
+         * 2） 循环扫描图中顶点，对每个顶点进行以下检测：
+         *     假设当前顶点为V_j，检测V_j是否已经已经被并入S中，即看是否set[V_j]=1。
+         *     若是，则什么也不做；如果set[V_j]=0，
+         *     则比较dist[V_j]和dist[V_u]+w的大小，其中w为边<V_u,V_j>的权值。
+         *     这个比较就是要看V_0经过旧的最短路径到达V_j和V_0经过含有V_u的新的最短路径
+         *     到达V_j哪个更短，
+         *     -----------------------------------------------------------------
+         *     ######如果dist[V_j]>dist[V_u]+w,则用新的路径长度代替旧的，#########
+         *     -----------------------------------------------------------------
+         *     并把顶点V_u加入路径中，且作为路径上V_j之前的那个顶点；否则什么都不做。
+         * 3） 对1）和2）循环执行n-1次（n为图中顶点个数），即可得到V_0到其余所有顶点
+         *     的最短路径。
+         */
+}
+void Swapn(Road roads[],int i, int j){
         int temp;
         temp = roads[i].a;
         roads[i].a = roads[j].a;
