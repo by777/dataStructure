@@ -38,8 +38,12 @@ typedef struct {
 }Road;
 
 bool visited[MAXVEX];//邻接矩阵访问标志的数组
-typedef int Patharc[MAXVEX];    //用于存储最短路径下标的数组
-typedef int ShortPathTable[MAXVEX];//用于存储到各点最短路径的权值和
+int path[MAXVEX];
+//保存从V_0到V_i最短路径上V_i的前一个顶点，假设最短路径上的顶点序列为V0,V1,...，则path[V_i]
+//为V_i-1。path的初态为：如果V_0到V_i有边，则path[V_i]=V_0，否则-1
+int dist[MAXVEX];
+//表示当前已经找到的从V_0到每个重点V_j的最短路径的长度。它的初态为：若从V_0到V_i有边则
+//dist[V_j]为边上的权值，否则置dist[V_j]为∞
 
 void CreateMGraph(MGraph *G);//邻接矩阵
 void CreateALGraph(GraphAdjList *G);//邻接表建立
@@ -55,8 +59,8 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum);//使用Prime最小代价生成
 void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
-void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D);
-void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D){
+void ShortestPath_Dijkstra(MGraph G, int v, int path[], int dist[]);
+void ShortestPath_Dijkstra(MGraph G, int v, int path[], int dist[]){
         /* 采用迪杰斯特拉算法求图中某一顶点到其余各顶点的最短路径
          * 执行过程：
          * 1） 从当前的dist[]数组中选出最小值，假设为dist[V_u]，将set[V_u]设置为1，表示
@@ -74,6 +78,18 @@ void ShortestPath_Dijkstra(MGraph G, int v0, Patharc *P, ShortPathTable *D){
          * 3） 对1）和2）循环执行n-1次（n为图中顶点个数），即可得到V_0到其余所有顶点
          *     的最短路径。
          */
+        int set[maxSize];
+        int i;
+        for ( i = 0; i < G.numNodes; i++) {
+                //初始化数组
+                dist[i]=G.arc[v][i];
+                set[i]=0;
+                if (G.arc[v][i]<INF)
+                        path[i]=v;
+
+                else
+                        path[i]=-1;
+        }
 }
 void Swapn(Road roads[],int i, int j){
         int temp;
