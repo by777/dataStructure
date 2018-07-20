@@ -79,18 +79,45 @@ void ShortestPath_Dijkstra(MGraph G, int v, int path[], int dist[]){
          *     的最短路径。ph
          */
         int set[maxSize];
-        int i;
+        int i,j,u,min;
         for ( i = 0; i < G.numNodes; i++) {
                 //初始化数组
-                dist[i]=G.arc[v][i];
+                dist[i]=G.arc[v][i];//dist[V_j]为边上的权值，否则置dist[V_j]为∞
                 set[i]=0;
                 if (G.arc[v][i]<INF)
+                        //如果V_0到V_i有边，则path[V_i]=V_0，否则-1
                         path[i]=v;
 
                 else
                         path[i]=-1;
         }
+        set[v] = 1;
+        path[v] = -1;
+        //初始化结束、关键操作开始
+        for (i = 0; i < G.numNodes -1; i++) {
+                min = INF;
+                //这个循环每次从剩余顶点中选出一个顶点，通往这个顶点的路径在通往
+                //所以剩余顶点的路径中长度是最短的
+                for (j = 0; j < G.numNodes; j++) {
+                        if(set[j] == 0 && dist[j] < min) {
+                                u = j;
+                                min=dist[j];
+                        }
+                }
+                set[u] = 1;//将刚选出的顶点并入到最短路径中
+                //将这个循环以刚并入的顶点作为中间点，对所有通往剩余顶点的路径进行检测
+                for(j = 0; j < G.numNodes; j++) {
+                        //判断顶点u的加入是否会出现通过顶点j的更短的路径，如果出现，就修改原来的路径及长度
+                        if (set[j] == 0 && dist[u] + G.arc[u][j] < dist[j]) {
+                                dist[j] = dist[u] + G.arc[u][j];
+                                path[j] = u;
+                        }
+                }
+
+        }//关键操作结束
+//函数结束时，dist[]数组存放了v点到其余顶点的最短路径长度，path[]存放了v点到其余各顶点的最短路径
 }
+
 void Swapn(Road roads[],int i, int j){
         int temp;
         temp = roads[i].a;
