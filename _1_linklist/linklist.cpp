@@ -327,8 +327,8 @@ int main() {
          */
 
 
-        LNode* head = chooseCreate();
-        visitliklist(head); cout<<endl;
+        //LNode* head = chooseCreate();
+        //visitliklist(head); cout<<endl;
 
         int a[] = {0,1,5,11,20};
         LNode *head_1 = createliklistManu(a,5);

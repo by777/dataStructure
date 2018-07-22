@@ -516,7 +516,7 @@ int main(){
         //MiniSpanTree_Kruskal(MG);
         int v = 0;
         int PATH[20],DIST[20];
-        ShortestPath_Dijkstra(MG,v,DIST,PATH);
+        //ShortestPath_Dijkstra(MG,v,DIST,PATH);
         for(int i = 0; i < 20; i++) {
                 cout<<PATH[i]<<" ";
                 cout<<"\n";
