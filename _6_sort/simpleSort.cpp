@@ -7,7 +7,7 @@ using namespace std;
 void InsertSort(int R[],int n);
 void QuickSort(int R[],int low,int high);
 void QuickSort(int R[],int low,int high){
-        //cout<<"/递归"<<"";
+
         int temp;
         int i = low,j = high;
         if (low<high) {
