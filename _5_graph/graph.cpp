@@ -60,6 +60,23 @@ void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
+void PrintPath(int path[],int n);
+void PrintPath(int path[],int a){
+        //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
+        //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
+        //路径上的节点，而不能逆向输出，因此需要一个栈辅助输出
+        int stack[maxSize],top = -1;
+        while (path[a] != -1) {
+                //这个循环以叶子节点到根节点的顺序入栈
+                stack[++top] = a;
+                a = path[a];
+        }
+        stack[++top] = 1;
+        while (top != -1)
+                cout<<stack[top--] <<" ";
+        cout<<"End"<<endl;
+
+}
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]){
         /* 采用迪杰斯特拉算法求图中某一顶点到其余各顶点的最短路径
          * 执行过程：
@@ -515,12 +532,13 @@ int main(){
         //cout<<"最小代价："<<sum<<endl;
         //MiniSpanTree_Kruskal(MG);
         int v = 0;
-        int PATH[20],DIST[20];
-        //ShortestPath_Dijkstra(MG,v,DIST,PATH);
-        for(int i = 0; i < 20; i++) {
-                cout<<PATH[i]<<" ";
-                cout<<"\n";
-                cout<<DIST[i]<<" ";
-        }
+        int PATH[20],DIST[0];
+        ShortestPath_Dijkstra(MG,v,DIST,PATH);
+        PrintPath(PATH,20);
+        // for(int i = 0; i < 20; i++) {
+        //         cout<<"PATH:"<<PATH[i]<<" ";
+        //         cout<<"\n";
+        //         cout<<"DIST:"<<DIST[i]<<" ";
+        // }
         return 0;
 }
