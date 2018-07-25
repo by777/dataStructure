@@ -63,51 +63,14 @@ void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
 //求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和 */
 void PrintPath(int path[],int n);
 void InitMGraphDemo(MGraph *G);
-void InitMGraphDemo(MGraph *G)
-{
-        int i, j;
-        /* printf("请输入边数和顶点数:"); */
-        G->numEdges=16;
-        G->numNodes=9;
-        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
-                G->vexs[i]=i;
-        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
-                for ( j = 0; j < G->numNodes; j++) {
-                        if (i==j)
-                                G->arc[i][j]=0;
-                        else
-                                G->arc[i][j] = G->arc[j][i] = INF;
-                }
 
-        G->arc[0][1]=1;
-        G->arc[0][2]=5;
-        G->arc[1][2]=3;
-        G->arc[1][3]=7;
-        G->arc[1][4]=5;
-        G->arc[2][4]=1;
-        G->arc[2][5]=7;
-        G->arc[3][4]=2;
-        G->arc[3][6]=3;
-        G->arc[4][5]=3;
-        G->arc[4][6]=6;
-        G->arc[4][7]=9;
-        G->arc[5][7]=5;
-        G->arc[6][7]=2;
-        G->arc[6][8]=7;
-        G->arc[7][8]=4;
-
-        for(i = 0; i < G->numNodes; i++)
-                for(j = i; j < G->numNodes; j++)
-                        G->arc[j][i] =G->arc[i][j];
-
-
-
-}
 void PrintPath(int path[],int a){
+        cout<<"打印Path数组："<<endl;
         //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
         //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
         //路径上的节点，而不能逆向输出，因此需要一个栈辅助输出
         int stack[maxSize],top = -1;
+        //cout<<path[a];
         while (path[a] != -1) {
                 //这个循环以叶子节点到根节点的顺序入栈
                 stack[++top] = a;
@@ -115,10 +78,11 @@ void PrintPath(int path[],int a){
         }
         stack[++top] = 1;
         while (top != -1)
-                cout<<stack[top--] <<" ";
-        cout<<"End"<<endl;
+                cout<<stack[top--] <<" - ";
+        cout<<"\n--End--"<<endl;
 
 }
+
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]){
         /* 采用迪杰斯特拉算法求图中某一顶点到其余各顶点的最短路径
          * 执行过程：
@@ -553,6 +517,48 @@ void CreateMGraph(MGraph *G){
                 G->arc[j][i] = w;//无向图，矩阵对称
         }
 }
+
+void InitMGraphDemo(MGraph *G)
+{
+        int i, j;
+        /* printf("请输入边数和顶点数:"); */
+        G->numEdges=16;
+        G->numNodes=9;
+        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
+                G->vexs[i]=i;
+        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
+                for ( j = 0; j < G->numNodes; j++) {
+                        if (i==j)
+                                G->arc[i][j]=0;
+                        else
+                                G->arc[i][j] = G->arc[j][i] = INF;
+                }
+
+        G->arc[0][1]=1;
+        G->arc[0][2]=5;
+        G->arc[1][2]=3;
+        G->arc[1][3]=7;
+        G->arc[1][4]=5;
+        G->arc[2][4]=1;
+        G->arc[2][5]=7;
+        G->arc[3][4]=2;
+        G->arc[3][6]=3;
+        G->arc[4][5]=3;
+        G->arc[4][6]=6;
+        G->arc[4][7]=9;
+        G->arc[5][7]=5;
+        G->arc[6][7]=2;
+        G->arc[6][8]=7;
+        G->arc[7][8]=4;
+
+        for(i = 0; i < G->numNodes; i++)
+                for(j = i; j < G->numNodes; j++)
+                        G->arc[j][i] =G->arc[i][j];
+
+
+
+}
+
 ///////////////////增加图结构示意图//////////////////
 int main(){
         // MGraph G;
@@ -575,13 +581,13 @@ int main(){
         //cout<<"最小代价："<<sum<<endl;
         //MiniSpanTree_Kruskal(MG);
         int v = 0;
-        int PATH[20],DIST[0];
+        int PATH[MG.numNodes],DIST[MG.numNodes];
         ShortestPath_Dijkstra(MG,v,DIST,PATH);
-        PrintPath(PATH,20);
-        // for(int i = 0; i < 20; i++) {
-        //         cout<<"PATH:"<<PATH[i]<<" ";
-        //         cout<<"\n";
-        //         cout<<"DIST:"<<DIST[i]<<" ";
-        // }
+        PrintPath(PATH,MG.numNodes);
+        for(int i = 0; i < MG.numNodes; i++) {
+                cout<<"PATH:"<<PATH[i]<<" ";
+                cout<<"\n";
+                //  cout<<"DIST:"<<DIST[i]<<" ";
+        }
         return 0;
 }
