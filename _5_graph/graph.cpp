@@ -62,6 +62,47 @@ void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
 //求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和 */
 void PrintPath(int path[],int n);
+void InitMGraphDemo(MGraph *G);
+void InitMGraphDemo(MGraph *G)
+{
+        int i, j;
+        /* printf("请输入边数和顶点数:"); */
+        G->numEdges=16;
+        G->numNodes=9;
+        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
+                G->vexs[i]=i;
+        for (i = 0; i < G->numNodes; i++) /* 初始化图 */
+                for ( j = 0; j < G->numNodes; j++) {
+                        if (i==j)
+                                G->arc[i][j]=0;
+                        else
+                                G->arc[i][j] = G->arc[j][i] = INF;
+                }
+
+        G->arc[0][1]=1;
+        G->arc[0][2]=5;
+        G->arc[1][2]=3;
+        G->arc[1][3]=7;
+        G->arc[1][4]=5;
+        G->arc[2][4]=1;
+        G->arc[2][5]=7;
+        G->arc[3][4]=2;
+        G->arc[3][6]=3;
+        G->arc[4][5]=3;
+        G->arc[4][6]=6;
+        G->arc[4][7]=9;
+        G->arc[5][7]=5;
+        G->arc[6][7]=2;
+        G->arc[6][8]=7;
+        G->arc[7][8]=4;
+
+        for(i = 0; i < G->numNodes; i++)
+                for(j = i; j < G->numNodes; j++)
+                        G->arc[j][i] =G->arc[i][j];
+
+
+
+}
 void PrintPath(int path[],int a){
         //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
         //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
@@ -518,7 +559,8 @@ int main(){
         // CreateMGraph(&G);
         MGraph MG;
         //CreateALGraph(&Q);
-        CreateMGraphDemo(&MG);
+        //CreateMGraphDemo(&MG);
+        InitMGraphDemo(&MG);
         //  MiniSpanTree_PrimD(MG);
         //CreateMGraphD(&MG);
         //MGDFSTraverse(MG);
