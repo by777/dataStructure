@@ -96,7 +96,7 @@ void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]){
          * 3） 对1）和2）循环执行n-1次（n为图中顶点个数），即可得到V_0到其余所有顶点
          *     的最短路径。ph
          */
-        int set[maxSize];
+        int set[maxSize];//=1代表被并入到最短路径中，初态为set[V0]=1，其余为0
         int i,j,u,min;
         for ( i = 0; i < G.numNodes; i++) {
                 //初始化数组
@@ -117,7 +117,7 @@ void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]){
                 //这个循环每次从剩余顶点中选出一个顶点，通往这个顶点的路径在通往
                 //所以剩余顶点的路径中长度是最短的
                 for (j = 0; j < G.numNodes; j++) {
-                        if(set[j] == 0 && dist[j] < min) {
+                        if(set[j] == 0 && dist[j] < min) {//j没有被并入且距离更短
                                 u = j;
                                 min=dist[j];
                         }
@@ -521,7 +521,7 @@ int main(){
         CreateMGraphDemo(&MG);
         //  MiniSpanTree_PrimD(MG);
         //CreateMGraphD(&MG);
-        MGDFSTraverse(MG);
+        //MGDFSTraverse(MG);
         //MGBFSTraverse(&MG);
         //GraphAdjList* GLDemo = NULL;
         //CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
