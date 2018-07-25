@@ -60,6 +60,7 @@ void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
+//求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和 */
 void PrintPath(int path[],int n);
 void PrintPath(int path[],int a){
         //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
@@ -520,7 +521,7 @@ int main(){
         CreateMGraphDemo(&MG);
         //  MiniSpanTree_PrimD(MG);
         //CreateMGraphD(&MG);
-        //MGDFSTraverse(G);
+        MGDFSTraverse(MG);
         //MGBFSTraverse(&MG);
         //GraphAdjList* GLDemo = NULL;
         //CreateALGraphDemo(MG,GLDemo);//利用邻接矩阵MG创建了邻接表GL
