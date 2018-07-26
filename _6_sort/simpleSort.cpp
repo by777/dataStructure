@@ -11,23 +11,19 @@ void PrintArr(int R[],int n);
 void swap(int &a, int &b);
 
 void swap(int &a, int &b){
-        cout<<"交换"<<a<<b;
         int temp = a;
         a = b;
         b = temp;
 }
-
-
 
 void SelectSort(int R[],int n){
         //从头至尾顺序扫描序列，找出最小的一个关键字，和第一个关键字交换，重复。。
         cout<<"SelectSort:"<<endl;
         int i = 0,j;
         for (i=0; i<n; i++) {
-                cout<<"R[i]="<<R[i]<<"  ";
                 for(j = i + 1; j < n; j++ ) {
                         if (R[j] < R[i]) {
-                                cout<<"找到了新的最小值";
+                                swap(R[i],R[j]);
                         }
                 }
 
@@ -35,7 +31,6 @@ void SelectSort(int R[],int n){
 }
 
 void QuickSort(int R[],int low,int high){
-
         int temp;
         int i = low,j = high;
         if (low<high) {
@@ -95,8 +90,6 @@ int main() {
         //InsertSort(R,n);
         //QuickSort(R,0,5);
         SelectSort(R,n);
-
-
         PrintArr(R,n);
 
         return 0;
