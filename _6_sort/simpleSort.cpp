@@ -6,6 +6,34 @@ using namespace std;
 
 void InsertSort(int R[],int n);
 void QuickSort(int R[],int low,int high);
+void SelectSort(int R[],int n);
+void PrintArr(int R[],int n);
+void swap(int &a, int &b);
+
+void swap(int &a, int &b){
+        cout<<"交换"<<a<<b;
+        int temp = a;
+        a = b;
+        b = temp;
+}
+
+
+
+void SelectSort(int R[],int n){
+        //从头至尾顺序扫描序列，找出最小的一个关键字，和第一个关键字交换，重复。。
+        cout<<"SelectSort:"<<endl;
+        int i = 0,j;
+        for (i=0; i<n; i++) {
+                cout<<"R[i]="<<R[i]<<"  ";
+                for(j = i + 1; j < n; j++ ) {
+                        if (R[j] < R[i]) {
+                                cout<<"找到了新的最小值";
+                        }
+                }
+
+        }
+}
+
 void QuickSort(int R[],int low,int high){
 
         int temp;
@@ -34,14 +62,8 @@ void QuickSort(int R[],int low,int high){
                 QuickSort(R,i+1,high);
         }
 }
-void PrintArr(int R[],int n);
-void PrintArr(int R[],int n){
-        cout<<"开始输出数组"<<endl;
-        int i = 0;
-        for (i=0; i<n; i++) {
-                cout<<R[i]<<"-";
-        }
-}
+
+
 void InsertSort(int R[],int n){
         cout<<"直接插入排序"<<endl;
         //算法思想：每趟将一个待排序的关键字按照其值的大小插入到已经排好序的部分序列的适当位置上
@@ -58,12 +80,23 @@ void InsertSort(int R[],int n){
         }
 }
 
+void PrintArr(int R[],int n){
+        cout<<"开始输出数组"<<endl;
+        int i = 0;
+        for (i=0; i<n; i++) {
+                cout<<R[i]<<" ";
+        }
+}
+
 int main() {
         /* code */
         int R[6] = {1,3,14,12,2,3};
         int n = 6;
         //InsertSort(R,n);
-        QuickSort(R,0,5);
+        //QuickSort(R,0,5);
+        SelectSort(R,n);
+
+
         PrintArr(R,n);
 
         return 0;

@@ -70,15 +70,16 @@ void PrintPath(int path[],int a){
         //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
         //路径上的节点，而不能逆向输出，因此需要一个栈辅助输出
         int stack[maxSize],top = -1;
+        cout<<"path[a]:"<<path[a]<<endl;
         //cout<<path[a];
         while (path[a] != -1) {
                 //这个循环以叶子节点到根节点的顺序入栈
                 stack[++top] = a;
                 a = path[a];
         }
-        stack[++top] = 1;
+        stack[++top] = a;
         while (top != -1)
-                cout<<stack[top--] <<" - ";
+                cout<<stack[top--] <<" ";
         cout<<"\n--End--"<<endl;
 
 }
@@ -585,7 +586,7 @@ int main(){
         ShortestPath_Dijkstra(MG,v,DIST,PATH);
         PrintPath(PATH,MG.numNodes);
         for(int i = 0; i < MG.numNodes; i++) {
-                cout<<"PATH:"<<PATH[i]<<" ";
+                cout<<"PATH:"<<i<<": "<<PATH[i]<<" ";
                 cout<<"\n";
                 //  cout<<"DIST:"<<DIST[i]<<" ";
         }
