@@ -61,10 +61,47 @@ void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
 //求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和 */
-void PrintPath(int path[],int n);
+void PrintPath_Dijkstra(int path[],int n);
+void PrintPath_Floyd(int u, int v, int Path[][maxSize]);
+void PrintPath_Floyd(int u, int v, int Path[][maxSize]){
+        if (Path[u][v] == -1) {
+                cout<<Path[u][v];
+        }
+        else{
+                int mid = Path[u][v];
+                PrintPath_Floyd(u,mid,Path);
+                PrintPath_Floyd(mid,v,Path);
+        }
+}
 void InitMGraphDemo(MGraph *G);
 
-void PrintPath(int path[],int a){
+void ShortestPath_Floyd(MGraph G,int Path[][maxSize]);
+void ShortestPath_Floyd(MGraph G,int Path[][maxSize]){
+        /*
+         * 弗洛伊德算法求解最短路径的一般过程
+         * 1）设置两个矩阵A和Path，初始时将图的邻接矩阵赋值给A，将矩阵Path中的元素全部设置为-1
+         * 2）以顶点k为中间顶点，k取0~n-1，对图中所有顶点对（i，j）进行如下检测和修改：
+         *    如果A[i][j] > A[i][k] + A[k][J]，则将Path[i][j]改为k。
+         *         *
+         */
+        int A[maxSize][maxSize];
+        int i,j,k;
+        for(i = 0; i < G.numNodes; i++)
+                for (j = 0; j < G.numNodes; j++) {
+                        A[i][j] = G.arc[i][j];
+                        Path[i][j] = -1;
+                }
+        for(k = 0; k < G.numNodes; k++)
+                for(i = 0; i < G.numNodes; i++)
+                        for (j = 0; j < G.numNodes; j++) {
+                                if (A[i][j] > A[i][k] + A[k][j]) {
+                                        A[i][j] = A[i][k] + A[k][j];
+                                        Path[i][j] = k;
+                                }
+                        }
+
+}
+void PrintPath_Dijkstra(int path[],int a){
         cout<<"打印Path数组："<<endl;
         //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
         //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
@@ -584,7 +621,7 @@ int main(){
         int v = 0;
         int PATH[MG.numNodes],DIST[MG.numNodes];
         ShortestPath_Dijkstra(MG,v,DIST,PATH);
-        PrintPath(PATH,MG.numNodes);
+        PrintPath_Dijkstra(PATH,MG.numNodes);
         for(int i = 0; i < MG.numNodes; i++) {
                 cout<<"PATH:"<<i<<": "<<PATH[i]<<" ";
                 cout<<"\n";
