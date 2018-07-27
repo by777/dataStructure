@@ -60,22 +60,30 @@ void MiniSpanTree_Kruskal(MGraph G);//使用克鲁斯卡尔最小代价生成树
 void sort(Road roads[],MGraph &G);
 void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
-//求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和 */
+//求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和
 void PrintPath_Dijkstra(int path[],int n);
 void PrintPath_Floyd(int u, int v, int Path[][maxSize]);
+void ShortestPath_Floyd(MGraph G,int Path[][maxSize]);
+void InitMGraphDemo(MGraph *G);
+
 void PrintPath_Floyd(int u, int v, int Path[][maxSize]){
+        //输出从u到v的最短路径上顶点序列
         if (Path[u][v] == -1) {
-                cout<<Path[u][v];
+                cout<<Path[u][v];//直接输出
         }
         else{
                 int mid = Path[u][v];
                 PrintPath_Floyd(u,mid,Path);
                 PrintPath_Floyd(mid,v,Path);
         }
+        /*
+         * 例如：
+         * 由Path[1][0] = 3可知，从顶点1到顶点0要经过顶点3，将3作为下一步的起点
+         * 由Path[1][0] = -1可知，从顶点1到顶点0有直接相连的边，求解结束
+         *
+         */
 }
-void InitMGraphDemo(MGraph *G);
 
-void ShortestPath_Floyd(MGraph G,int Path[][maxSize]);
 void ShortestPath_Floyd(MGraph G,int Path[][maxSize]){
         /*
          * 弗洛伊德算法求解最短路径的一般过程
@@ -101,11 +109,14 @@ void ShortestPath_Floyd(MGraph G,int Path[][maxSize]){
                         }
 
 }
+
 void PrintPath_Dijkstra(int path[],int a){
-        cout<<"打印Path数组："<<endl;
-        //path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
-        //到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
-        //路径上的节点，而不能逆向输出，因此需要一个栈辅助输出
+        /*
+         * path数组实际上保存了一棵树，这是一棵用双亲表示法存储的树，通过这棵树可以打印从源点
+         * 到任何一个顶点最短路径上所经过的所有顶点。树的双亲表示法只能直接输出由叶子节点到根节点
+         * 路径上的节点，而不能逆向输出，因此需要一个栈辅助输出
+         *
+         */
         int stack[maxSize],top = -1;
         cout<<"path[a]:"<<path[a]<<endl;
         //cout<<path[a];
@@ -618,14 +629,17 @@ int main(){
         //MiniSpanTree_Prim(MG,v0,sum);
         //cout<<"最小代价："<<sum<<endl;
         //MiniSpanTree_Kruskal(MG);
-        int v = 0;
-        int PATH[MG.numNodes],DIST[MG.numNodes];
-        ShortestPath_Dijkstra(MG,v,DIST,PATH);
-        PrintPath_Dijkstra(PATH,MG.numNodes);
-        for(int i = 0; i < MG.numNodes; i++) {
-                cout<<"PATH:"<<i<<": "<<PATH[i]<<" ";
-                cout<<"\n";
-                //  cout<<"DIST:"<<DIST[i]<<" ";
-        }
+        //int v = 0;
+        //int PATH[MG.numNodes],DIST[MG.numNodes];
+        //ShortestPath_Dijkstra(MG,v,DIST,PATH);
+        int Path[maxSize][maxSize];
+        ShortestPath_Floyd(MG,Path);
+        PrintPath_Floyd(0,5,Path);
+        //PrintPath_Dijkstra(PATH,MG.numNodes);
+        // for(int i = 0; i < MG.numNodes; i++) {
+        //         cout<<"PATH:"<<i<<": "<<PATH[i]<<" ";
+        //         cout<<"\n";
+        //         //  cout<<"DIST:"<<DIST[i]<<" ";
+        // }
         return 0;
 }
