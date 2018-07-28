@@ -38,6 +38,8 @@ typedef struct {
 }Road;
 
 bool visited[MAXVEX];//邻接矩阵访问标志的数组
+typedef int Patharc[MAXVEX][MAXVEX];
+typedef int ShortPathTable[MAXVEX][MAXVEX];
 //int path[MAXVEX];
 //保存从V_0到V_i最短路径上V_i的前一个顶点，假设最短路径上的顶点序列为V0,V1,...，则path[V_i]
 //为V_i-1。path的初态为：如果V_0到V_i有边，则path[V_i]=V_0，否则-1
@@ -62,20 +64,38 @@ void Swapn(Road roads[],int i, int j);
 void ShortestPath_Dijkstra(MGraph G, int v, int dist[], int path[]);
 //求有向网G的v0顶点到其余顶点v的最短路径P[v]及带权长度D[v] P[v]的值为前驱顶点下标,D[v]表示v0到v的最短路径长度和
 void PrintPath_Dijkstra(int path[],int n);
-void PrintPath_Floyd(int u, int v, int Path[][maxSize]);
-void ShortestPath_Floyd(MGraph G,int Path[][maxSize]);
+void ShortestPath_Floyd(MGraph G, Patharc *P, ShortPathTable *D);
 void InitMGraphDemo(MGraph *G);
 
-void PrintPath_Floyd(int u, int v, int Path[][maxSize]){
+void PrintPath_Floyd(MGraph G,Patharc P,ShortPathTable D){
         //输出从u到v的最短路径上顶点序列
-        if (Path[u][v] == -1) {
-                cout<<Path[u][v];//直接输出
+        int v,w,k;
+        printf("各顶点间最短路径如下:\n");
+        for(v=0; v<G.numNodes; ++v)
+                for(w=v+1; w<G.numNodes; w++) {
+                        printf("v%d-v%d weight: %d ",v,w,D[v][w]);
+                        k=P[v][w]; // 获得第一个路径顶点下标
+                        printf(" path: %d",v); // 打印源点
+                        while(k!=w) { // 如果路径顶点下标不是终点
+                                printf(" -> %d",k); // 打印路径顶点
+                                k=P[k][w]; // 获得下一个路径顶点下标
+                        }
+                        printf(" -> %d\n",w); // 打印终点
+                }
+        printf("\n");
+
+        printf("最短路径D\n");
+        for(v=0; v<G.numNodes; ++v) {
+                for(w=0; w<G.numNodes; ++w) {
+                        printf("%d\t",D[v][w]);
+                }
+                printf("\n");
         }
-        else{
-                int mid = Path[u][v];
-                PrintPath_Floyd(u,mid,Path);
-                PrintPath_Floyd(mid,v,Path);
-        }
+        printf("最短路径P\n");
+        for(v=0; v<G.numNodes; ++v)
+                for(w=0; w<G.numNodes; ++w)
+                        printf("%d ",P[v][w]);
+        printf("\n");
         /*
          * 例如：
          * 由Path[1][0] = 3可知，从顶点1到顶点0要经过顶点3，将3作为下一步的起点
@@ -84,7 +104,7 @@ void PrintPath_Floyd(int u, int v, int Path[][maxSize]){
          */
 }
 
-void ShortestPath_Floyd(MGraph G,int Path[][maxSize]){
+void ShortestPath_Floyd(MGraph G, Patharc *P, ShortPathTable *D) {
         /*
          * 弗洛伊德算法求解最短路径的一般过程
          * 1）设置两个矩阵A和Path，初始时将图的邻接矩阵赋值给A，将矩阵Path中的元素全部设置为-1
@@ -92,22 +112,29 @@ void ShortestPath_Floyd(MGraph G,int Path[][maxSize]){
          *    如果A[i][j] > A[i][k] + A[k][J]，则将Path[i][j]改为k。
          *         *
          */
-        int A[maxSize][maxSize];
-        int i,j,k;
-        for(i = 0; i < G.numNodes; i++)
-                for (j = 0; j < G.numNodes; j++) {
-                        A[i][j] = G.arc[i][j];
-                        Path[i][j] = -1;
+        int v,w,k;
+        for(v=0; v<G.numNodes; ++v) /* 初始化D与P */
+        {
+                for(w=0; w<G.numNodes; ++w)
+                {
+                        (*D)[v][w]=G.arc[v][w]; /* D[v][w]值即为对应点间的权值 */
+                        (*P)[v][w]=w; /* 初始化P */
                 }
-        for(k = 0; k < G.numNodes; k++)
-                for(i = 0; i < G.numNodes; i++)
-                        for (j = 0; j < G.numNodes; j++) {
-                                if (A[i][j] > A[i][k] + A[k][j]) {
-                                        A[i][j] = A[i][k] + A[k][j];
-                                        Path[i][j] = k;
+        }
+        for(k=0; k<G.numNodes; ++k)
+        {
+                for(v=0; v<G.numNodes; ++v)
+                {
+                        for(w=0; w<G.numNodes; ++w)
+                        {
+                                if ((*D)[v][w]>(*D)[v][k]+(*D)[k][w])
+                                {/* 如果经过下标为k顶点路径比原两点间路径更短 */
+                                        (*D)[v][w]=(*D)[v][k]+(*D)[k][w];/* 将当前两点间权值设为更小的一个 */
+                                        (*P)[v][w]=(*P)[v][k];/* 路径设置为经过下标为k的顶点 */
                                 }
                         }
-
+                }
+        }
 }
 
 void PrintPath_Dijkstra(int path[],int a){
@@ -632,14 +659,11 @@ int main(){
         //int v = 0;
         //int PATH[MG.numNodes],DIST[MG.numNodes];
         //ShortestPath_Dijkstra(MG,v,DIST,PATH);
-        int Path[maxSize][maxSize];
-        ShortestPath_Floyd(MG,Path);
-        PrintPath_Floyd(0,5,Path);
         //PrintPath_Dijkstra(PATH,MG.numNodes);
-        // for(int i = 0; i < MG.numNodes; i++) {
-        //         cout<<"PATH:"<<i<<": "<<PATH[i]<<" ";
-        //         cout<<"\n";
-        //         //  cout<<"DIST:"<<DIST[i]<<" ";
-        // }
+        Patharc P;
+        ShortPathTable D;   /* 求某点到其余各点的最短路径 */
+        ShortestPath_Floyd(MG,&P,&D);
+        PrintPath_Floyd(MG,P,D);
+
         return 0;
 }
