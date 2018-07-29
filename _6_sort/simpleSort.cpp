@@ -17,7 +17,7 @@ void ShellSort(int R[],int n){
         do {
                 increment = increment / 3 + 1;//增量序列
                 for (i = increment + 1; i <= n; i++) {
-                        if (R[i] < R[i + increment]) {//需要插入到有序增量子表
+                        if (R[i] < R[i - increment]) {//需要插入到有序增量子表
                                 R[0] = R[i];//暂存在R[0]
                                 for (j=i-increment; j>0&&R[0]<R[j]; j-=increment ) {
                                         R[j + increment] = R[j];//记录后移，查找插入位置
@@ -25,7 +25,7 @@ void ShellSort(int R[],int n){
                                 R[j+increment] = R[0];//插入
                         }
                 }
-                cout<<"	第"<<k<<"趟排序结果: "<<R[k];
+                //cout<<"	第"<<k<<"趟排序结果: "<<R[k];
         } while(increment > 1);
 }
 
@@ -95,7 +95,7 @@ void InsertSort(int R[],int n){
 }
 
 void PrintArr(int R[],int n){
-        cout<<"开始输出数组"<<endl;
+        cout<<"\n开始输出数组"<<endl;
         int i = 0;
         for (i=0; i<n; i++) {
                 cout<<R[i]<<" ";
@@ -104,7 +104,7 @@ void PrintArr(int R[],int n){
 
 int main() {
         /* code */
-        int R[6] = {1,3,14,12,2,3};
+        int R[7] = {1,3,14,12,2,3};
         int n = 6;
         //InsertSort(R,n);
         //QuickSort(R,0,5);
