@@ -6,9 +6,28 @@ using namespace std;
 
 void InsertSort(int R[],int n);
 void QuickSort(int R[],int low,int high);
+void ShellSort(int R[]);
 void SelectSort(int R[],int n);
 void PrintArr(int R[],int n);
 void swap(int &a, int &b);
+
+void ShellSort(int R[],int n){
+        int i,j,k=0;
+        int increment = n;
+        do {
+                increment = increment / 3 + 1;//增量序列
+                for (i = increment + 1; i <= n; i++) {
+                        if (R[i] < R[i + increment]) {//需要插入到有序增量子表
+                                R[0] = R[i];//暂存在R[0]
+                                for (j=i-increment; j>0&&R[0]<R[j]; j-=increment ) {
+                                        R[j + increment] = R[j];//记录后移，查找插入位置
+                                }
+                                R[j+increment] = R[0];//插入
+                        }
+                }
+                cout<<"	第"<<k<<"趟排序结果: "<<R[k];
+        } while(increment > 1);
+}
 
 void swap(int &a, int &b){
         int temp = a;
@@ -89,7 +108,8 @@ int main() {
         int n = 6;
         //InsertSort(R,n);
         //QuickSort(R,0,5);
-        SelectSort(R,n);
+        //SelectSort(R,n);
+        ShellSort(R,n);
         PrintArr(R,n);
 
         return 0;
