@@ -12,7 +12,8 @@ void PrintArr(int R[],int n);
 void swap(int &a, int &b);
 
 void ShellSort(int R[],int n){
-        int i,j,k=0;
+        int i,j;
+        //int k=0
         int increment = n;
         do {
                 increment = increment / 3 + 1;//增量序列
