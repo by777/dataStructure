@@ -12,22 +12,15 @@ void PrintArr(int R[],int n);
 void swap(int &a, int &b);
 
 void ShellSort(int R[],int n){
+        int temp,gap;
         int i,j;
-        //int k=0
-        int increment = n;
-        do {
-                increment = increment / 3 + 1;//增量序列
-                for (i = increment + 1; i <= n; i++) {
-                        if (R[i] < R[i - increment]) {//需要插入到有序增量子表
-                                R[0] = R[i];//暂存在R[0]
-                                for (j=i-increment; j>0&&R[0]<R[j]; j-=increment ) {
-                                        R[j + increment] = R[j];//记录后移，查找插入位置
-                                }
-                                R[j+increment] = R[0];//插入
-                        }
-                }
-                //cout<<"	第"<<k<<"趟排序结果: "<<R[k];
-        } while(increment > 1);
+        for (gap = n/2; gap>0; gap /= 2) {
+                for(i = gap; i<n; ++i)
+                        temp = R[i];
+                for(j=i; j>=gap&&R[j-gap]>temp; j-=gap)
+                        R[j] = R[j-gap];
+                R[j] = temp;
+        }
 }
 
 void swap(int &a, int &b){
@@ -40,14 +33,13 @@ void SelectSort(int R[],int n){
         //从头至尾顺序扫描序列，找出最小的一个关键字，和第一个关键字交换，重复。。
         cout<<"SelectSort:"<<endl;
         int i = 0,j;
-        for (i=0; i<n; i++) {
-                for(j = i + 1; j < n; j++ ) {
-                        if (R[j] < R[i]) {
+        for (i=0; i<n; i++)
+                for(j = i + 1; j < n; j++ )
+                        if (R[j] < R[i])
                                 swap(R[i],R[j]);
-                        }
-                }
 
-        }
+
+
 }
 
 void QuickSort(int R[],int low,int high){
@@ -98,9 +90,9 @@ void InsertSort(int R[],int n){
 void PrintArr(int R[],int n){
         cout<<"\n开始输出数组"<<endl;
         int i = 0;
-        for (i=0; i<n; i++) {
+        for (i=0; i<n; i++)
                 cout<<R[i]<<" ";
-        }
+
 }
 
 int main() {
