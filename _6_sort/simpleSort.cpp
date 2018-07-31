@@ -8,8 +8,43 @@ void InsertSort(int R[],int n);
 void QuickSort(int R[],int low,int high);
 void ShellSort(int R[]);
 void SelectSort(int R[],int n);
+void SubMerge(int R[],int low,int mid,int high);
+void MergeSort(int R[],int low,int high);
 void PrintArr(int R[],int n);
 void swap(int &a, int &b);
+
+void SubMerge(int A[],int low,int mid,int high){
+        int i,j,k;
+        int n1 = mid - low + 1;
+        int n2 = high - mid;
+        int L[n1];
+        int R[n2];
+        for(i = 0; i < n1; i++)
+                L[i] = A[low + i];
+        for(j = 0; j< n2; j++)
+                R[j] = A[mid + 1 + j];
+        i = 0, j=0, k = low;
+        while (i < n1 && j < n2) {
+                if (L[i] <= R[j])
+                        A[k] = L[i++];
+                else
+                        A[k] = R[j++];
+                k++;
+        }
+        while (i < n1)
+                A[k++] = L[i++];
+        while(j < n2)
+                A[k++] = R[j++];
+}
+
+void MergeSort(int R[],int low,int high){
+        int mid = (low + high) / 2;
+        if (low < high) {
+                MergeSort(R, low, mid);
+                MergeSort(R, mid + 1, high);
+                SubMerge(R, low, mid, high);
+        }
+}
 
 void ShellSort(int R[],int n){
         int temp,gap;
@@ -102,7 +137,8 @@ int main() {
         //InsertSort(R,n);
         //QuickSort(R,0,5);
         //SelectSort(R,n);
-        ShellSort(R,n);
+        //ShellSort(R,n);
+        MergeSort(R,0,n);
         PrintArr(R,n);
 
         return 0;
