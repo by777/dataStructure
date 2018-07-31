@@ -138,7 +138,7 @@ int main() {
         //QuickSort(R,0,5);
         //SelectSort(R,n);
         //ShellSort(R,n);
-        MergeSort(R,0,n);
+        MergeSort(R,0,5);
         PrintArr(R,n);
 
         return 0;
