@@ -67,6 +67,115 @@ void PrintPath_Dijkstra(int path[],int n);
 void ShortestPath_Floyd(MGraph G, Patharc *P, ShortPathTable *D);
 void InitMGraphDemo(MGraph *G);
 
+int TopologicalSort(GraphAdjList *GL);
+void CreateMGraph(MGraph *G);
+
+void CreateMGraphTopo(MGraph *&G);/* 构建图 */
+void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL);
+
+void CreateMGraphTopo(MGraph *&G){
+        int i, j;
+
+        /* printf("请输入边数和顶点数:"); */
+        G->numEdges=MAXVEX;
+        G->numNodes=MAXVEX;
+
+        for (i = 0; i < G->numNodes; i++)/* 初始化图 */
+        {
+                G->vexs[i]=i;
+        }
+
+        for (i = 0; i < G->numNodes; i++)/* 初始化图 */
+        {
+                for ( j = 0; j < G->numNodes; j++)
+                {
+                        G->arc[i][j]=0;
+                }
+        }
+
+        G->arc[0][4]=1;
+        G->arc[0][5]=1;
+        G->arc[0][11]=1;
+        G->arc[1][2]=1;
+        G->arc[1][4]=1;
+        G->arc[1][8]=1;
+        G->arc[2][5]=1;
+        G->arc[2][6]=1;
+        G->arc[2][9]=1;
+        G->arc[3][2]=1;
+        G->arc[3][13]=1;
+        G->arc[4][7]=1;
+        G->arc[5][8]=1;
+        G->arc[5][12]=1;
+        G->arc[6][5]=1;
+        G->arc[8][7]=1;
+        G->arc[9][10]=1;
+        G->arc[9][11]=1;
+        G->arc[10][13]=1;
+        G->arc[12][9]=1;
+
+}
+
+/* 利用邻接矩阵构建邻接表 */
+void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL){
+        int i,j;
+        EdgeNode *e;
+
+        GL = (GraphAdjList*)malloc(sizeof(GraphAdjList));
+
+        (GL)->numNodes=G->numNodes;
+        (GL)->numEdges=G->numEdges;
+        for(i= 0; i <G->numNodes; i++) /* 读入顶点信息，建立顶点表 */
+        {
+                (GL)->adjList[i].in=0;
+                (GL)->adjList[i].data=G->vexs[i];
+                (GL)->adjList[i].firstedge=NULL; /* 将边表置为空表 */
+        }
+
+        for(i=0; i<G->numNodes; i++) /* 建立边表 */
+        {
+                for(j=0; j<G->numNodes; j++)
+                {
+                        if (G->arc[i][j]==1)
+                        {
+                                e=(EdgeNode *)malloc(sizeof(EdgeNode));
+                                e->adjvex=j; /* 邻接序号为j  */
+                                e->next=(GL)->adjList[i].firstedge; /* 将当前顶点上的指向的结点指针赋值给e */
+                                (GL)->adjList[i].firstedge=e; /* 将当前顶点的指针指向e  */
+                                (GL)->adjList[j].in++;
+
+                        }
+                }
+        }
+
+}
+
+
+int TopologicalSort(GraphAdjList *GL){
+        //拓扑排序，若GL无回路，则输出拓扑排序序列并返回0，若有回路返回-1
+        EdgeNode *e;
+        int top = 0,count = 0;
+        int i,k,gettop;
+        int* stack;
+        stack = (int*)malloc(sizeof(int) * GL->numNodes);
+        for(i = 0; i < GL->numNodes; i++)
+                if(0 == GL->adjList[i].in) //将入度为0的顶点入栈
+                        stack[++top] = i;
+        while (top != 0) {
+                gettop = stack[top--];
+                cout<<GL->adjList[gettop].data;
+                count++;//输出i号顶点，并计数
+                for(e = GL->adjList[gettop].firstedge; e; e = e->next) {
+                        k = e->adjvex;
+                        if(!(--GL->adjList[k].in)) //将i号顶点的邻接点的入度减1，如果减一后入度为0，则入栈
+                                stack[++top] = k;
+                }
+        }
+        cout<<endl;
+        if(count < GL->numNodes) return -1;
+        else return 0;
+
+}
 void PrintPath_Floyd(MGraph G,Patharc P,ShortPathTable D){
         //输出从u到v的最短路径上顶点序列
         int v,w,k;
@@ -639,11 +748,11 @@ void InitMGraphDemo(MGraph *G)
 int main(){
         // MGraph G;
         // CreateMGraph(&G);
-        MGraph MG;
+        //MGraph MG;
         //CreateALGraph(&Q);
         //CreateMGraphDemo(&MG);
-        InitMGraphDemo(&MG);
-        //  MiniSpanTree_PrimD(MG);
+        //InitMGraphDemo(&MG);
+        //MiniSpanTree_PrimD(MG);
         //CreateMGraphD(&MG);
         //MGDFSTraverse(MG);
         //MGBFSTraverse(&MG);
@@ -660,10 +769,15 @@ int main(){
         //int PATH[MG.numNodes],DIST[MG.numNodes];
         //ShortestPath_Dijkstra(MG,v,DIST,PATH);
         //PrintPath_Dijkstra(PATH,MG.numNodes);
-        Patharc P;
-        ShortPathTable D;   /* 求某点到其余各点的最短路径 */
-        ShortestPath_Floyd(MG,&P,&D);
-        PrintPath_Floyd(MG,P,D);
-
+        //Patharc P;
+        //ShortPathTable D;   /* 求某点到其余各点的最短路径 */
+        //ShortestPath_Floyd(MG,&P,&D);
+        //PrintPath_Floyd(MG,P,D);
+        MGraph *G = NULL;
+        GraphAdjList *GL = NULL;
+        CreateMGraphTopo(G);
+        CreateALGraphTopo(G,GL);
+        int result=TopologicalSort(GL);
+        printf("result:%d",result);
         return 0;
 }
