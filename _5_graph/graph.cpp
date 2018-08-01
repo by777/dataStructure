@@ -4,7 +4,8 @@
 #define INF 65535
 #define maxSize 100
 // 最大顶点数
-#define MAXVEX 100
+#define MAXEDGE 20
+#define MAXVEX 14
 using namespace std;
 
 typedef struct { //顶点char类型 边int
@@ -74,10 +75,11 @@ void CreateMGraphTopo(MGraph *&G);/* 构建图 */
 void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL);
 
 void CreateMGraphTopo(MGraph *&G){
+        cout<<"CreateMGraphTopo";
         int i, j;
 
         /* printf("请输入边数和顶点数:"); */
-        G->numEdges=MAXVEX;
+        G->numEdges=MAXEDGE;
         G->numNodes=MAXVEX;
 
         for (i = 0; i < G->numNodes; i++)/* 初始化图 */
@@ -113,11 +115,13 @@ void CreateMGraphTopo(MGraph *&G){
         G->arc[9][11]=1;
         G->arc[10][13]=1;
         G->arc[12][9]=1;
+        cout<<"CreateMGraphTopo End";
 
 }
 
 /* 利用邻接矩阵构建邻接表 */
 void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL){
+        cout<<"CreateALGraphTopo";
         int i,j;
         EdgeNode *e;
 
@@ -152,6 +156,7 @@ void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL){
 
 
 int TopologicalSort(GraphAdjList *GL){
+        cout<<"TopologicalSort";
         //拓扑排序，若GL无回路，则输出拓扑排序序列并返回0，若有回路返回-1
         EdgeNode *e;
         int top = 0,count = 0;
