@@ -75,7 +75,8 @@ void CreateMGraphTopo(MGraph *&G);/* 构建图 */
 void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL);
 
 void CreateMGraphTopo(MGraph *&G){
-        cout<<"CreateMGraphTopo";
+        G = (MGraph*)malloc(MAXEDGE*sizeof(MGraph));
+        cout<<"CreateMGraphTopo "<<endl;
         int i, j;
 
         /* printf("请输入边数和顶点数:"); */
@@ -115,7 +116,7 @@ void CreateMGraphTopo(MGraph *&G){
         G->arc[9][11]=1;
         G->arc[10][13]=1;
         G->arc[12][9]=1;
-        cout<<"CreateMGraphTopo End";
+
 
 }
 
@@ -159,15 +160,16 @@ int TopologicalSort(GraphAdjList *GL){
         cout<<"TopologicalSort";
         //拓扑排序，若GL无回路，则输出拓扑排序序列并返回0，若有回路返回-1
         EdgeNode *e;
-        int top = 0,count = 0;
+        int top = -1,count = 0;
         int i,k,gettop;
         int* stack;
         stack = (int*)malloc(sizeof(int) * GL->numNodes);
         for(i = 0; i < GL->numNodes; i++)
                 if(0 == GL->adjList[i].in) //将入度为0的顶点入栈
                         stack[++top] = i;
-        while (top != 0) {
+        while (top != -1) {
                 gettop = stack[top--];
+                cout<<"出栈"<<endl;
                 cout<<GL->adjList[gettop].data;
                 count++;//输出i号顶点，并计数
                 for(e = GL->adjList[gettop].firstedge; e; e = e->next) {
