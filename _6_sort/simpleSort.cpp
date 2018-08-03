@@ -4,6 +4,11 @@
 using namespace std;
 #define maxSize 100
 
+typedef struct {
+        int r[maxSize+1]; /* 用于存储要排序数组，r[0]用作哨兵或临时变量 */
+        int length; /* 用于记录顺序表的长度 */
+}SqList;
+
 void InsertSort(int R[],int n);
 void QuickSort(int R[],int low,int high);
 void ShellSort(int R[]);
@@ -12,6 +17,40 @@ void SubMerge(int R[],int low,int mid,int high);
 void MergeSort(int R[],int low,int high);
 void PrintArr(int R[],int n);
 void swap(int &a, int &b);
+void swap(SqList *L,int i,int j);
+void HeapAdjust(SqList *L, int s,int m);
+void HeapSort(SqList *L);
+void swap(SqList *L,int i,int j){
+        int temp=L->r[i];
+        L->r[i]=L->r[j];
+        L->r[j]=temp;
+}
+
+void HeapSort(SqList *L){
+        int i;
+        for(i=L->length/2; i>0; i--) //把L中的r构建成一个大根堆
+                HeapAdjust(L,i,L->length);
+        for(i=L->length; i>1; i--) {
+                swap(L,1,i);//将堆顶记录和当前未经排序子序列的最后一个记录交换
+                HeapAdjust(L,1,i-1);//将L->r[1..i-1]重新调整为大根堆
+        }
+}
+
+void HeapAdjust(SqList *L, int s,int m){
+        /* 已知L->r[s..m]中记录的关键字除L->r[s]之外均满足堆的定义，
+           本函数调整L->r[s]的关键字,使L->r[s..m]成为一个大顶堆 */
+        int temp, j;
+        temp = L->r[s];
+        for(j=2*s; j<=m; j*=2) {//沿关键字较大的孩子结点向下筛选
+                if (j < m && L->r[j] < L->r[j+1])
+                        ++j; //j为关键字中较大的记录的下标
+                if (temp >= L->r[j])
+                        break; // rc应插入在位置s上
+                L->r[s] = L->r[j];
+                s = j;
+        }
+        L->r[s] = temp;  //插入
+}
 
 void SubMerge(int A[],int low,int mid,int high){
         int i,j,k;
@@ -132,14 +171,22 @@ void PrintArr(int R[],int n){
 
 int main() {
         /* code */
-        int R[7] = {1,3,14,12,2,3};
-        int n = 6;
+        //int R[7] = {1,3,14,12,2,3};
+        //  int n = 6;
+        int i;
+        #define N 9
         //InsertSort(R,n);
         //QuickSort(R,0,5);
         //SelectSort(R,n);
         //ShellSort(R,n);
-        MergeSort(R,0,5);
-        PrintArr(R,n);
+        //MergeSort(R,0,5);
+        SqList Al0;
+        int d[N]={50,10,90,30,70,40,80,60,20};
+        for(i=0; i<N; i++)
+                Al0.r[i+1]=d[i];
+        Al0.length=N;
+        HeapSort(&Al0);
+        //PrintArr(R,n);
 
         return 0;
 }
