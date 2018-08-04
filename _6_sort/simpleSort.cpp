@@ -187,6 +187,6 @@ int main() {
         Al0.length=N;
         HeapSort(&Al0);
         //PrintArr(R,n);
-
+        //
         return 0;
 }
