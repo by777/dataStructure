@@ -16,6 +16,7 @@ void SelectSort(int R[],int n);
 void SubMerge(int R[],int low,int mid,int high);
 void MergeSort(int R[],int low,int high);
 void PrintArr(int R[],int n);
+void printL(SqList L);
 void swap(int &a, int &b);
 void swap(SqList *L,int i,int j);
 void HeapAdjust(SqList *L, int s,int m);
@@ -169,6 +170,15 @@ void PrintArr(int R[],int n){
 
 }
 
+void printL(SqList L)
+{
+        int i;
+        for(i=1; i<L.length; i++)
+                printf("%d,",L.r[i]);
+        printf("%d",L.r[i]);
+        printf("\n");
+}
+
 int main() {
         /* code */
         //int R[7] = {1,3,14,12,2,3};
@@ -187,6 +197,6 @@ int main() {
         Al0.length=N;
         HeapSort(&Al0);
         //PrintArr(R,n);
-        //
+        printL(Al0);
         return 0;
 }
