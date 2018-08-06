@@ -6,9 +6,10 @@
 // 最大顶点数
 #define MAXEDGE 20
 #define MAXVEX 14
+#define graphAdjList GraphAdjList;
 using namespace std;
-
-typedef struct { //顶点char类型 边int
+//typedef int typeInt
+typedef struct {         //顶点char类型 边int
         char vexs[MAXVEX]; //顶点表
         int arc[MAXVEX][MAXVEX]; //邻接矩阵
         int numNodes,numEdges; //顶点数和边数
@@ -28,10 +29,10 @@ typedef struct VertexNode {
         EdgeNode *firstedge;//边表头指针
 }VertexNode,AdjList[MAXVEX];
 
-typedef struct {
+typedef struct graphAdjList {
         AdjList adjList;
         int numNodes,numEdges;//图中当前顶点数和边数
-}GraphAdjList;
+}graphAdjList,*GraphAdjList,GraphAdjList;
 
 typedef struct {
         int a,b;//a和b为一条边所连的两个顶点
@@ -71,12 +72,8 @@ void InitMGraphDemo(MGraph *G);
 int TopologicalSort(GraphAdjList *GL);
 void CreateMGraph(MGraph *G);
 
-void CreateMGraphTopo(MGraph *&G);/* 构建图 */
-void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL);
-
-void CreateMGraphTopo(MGraph *&G){
-        G = (MGraph*)malloc(MAXEDGE*sizeof(MGraph));
-        cout<<"CreateMGraphTopo "<<endl;
+void CreateMGraphTopo(MGraph *G)/* 构件图 */
+{
         int i, j;
 
         /* printf("请输入边数和顶点数:"); */
@@ -117,37 +114,36 @@ void CreateMGraphTopo(MGraph *&G){
         G->arc[10][13]=1;
         G->arc[12][9]=1;
 
-
 }
 
 /* 利用邻接矩阵构建邻接表 */
-void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL){
-        cout<<"CreateALGraphTopo";
+void CreateALGraph(MGraph G,GraphAdjList *GL)
+{
         int i,j;
         EdgeNode *e;
 
-        GL = (GraphAdjList*)malloc(sizeof(GraphAdjList));
+        *GL = (GraphAdjList)malloc(sizeof(graphAdjList));
 
-        (GL)->numNodes=G->numNodes;
-        (GL)->numEdges=G->numEdges;
-        for(i= 0; i <G->numNodes; i++) /* 读入顶点信息，建立顶点表 */
+        (*GL)->numNodes=G.numNodes;
+        (*GL)->numEdges=G.numEdges;
+        for(i= 0; i <G.numNodes; i++) /* 读入顶点信息，建立顶点表 */
         {
-                (GL)->adjList[i].in=0;
-                (GL)->adjList[i].data=G->vexs[i];
-                (GL)->adjList[i].firstedge=NULL; /* 将边表置为空表 */
+                (*GL)->adjList[i].in=0;
+                (*GL)->adjList[i].data=G.vexs[i];
+                (*GL)->adjList[i].firstedge=NULL; /* 将边表置为空表 */
         }
 
-        for(i=0; i<G->numNodes; i++) /* 建立边表 */
+        for(i=0; i<G.numNodes; i++) /* 建立边表 */
         {
-                for(j=0; j<G->numNodes; j++)
+                for(j=0; j<G.numNodes; j++)
                 {
-                        if (G->arc[i][j]==1)
+                        if (G.arc[i][j]==1)
                         {
                                 e=(EdgeNode *)malloc(sizeof(EdgeNode));
                                 e->adjvex=j; /* 邻接序号为j  */
-                                e->next=(GL)->adjList[i].firstedge; /* 将当前顶点上的指向的结点指针赋值给e */
-                                (GL)->adjList[i].firstedge=e; /* 将当前顶点的指针指向e  */
-                                (GL)->adjList[j].in++;
+                                e->next=(*GL)->adjList[i].firstedge; /* 将当前顶点上的指向的结点指针赋值给e */
+                                (*GL)->adjList[i].firstedge=e; /* 将当前顶点的指针指向e  */
+                                (*GL)->adjList[j].in++;
 
                         }
                 }
@@ -156,33 +152,38 @@ void CreateALGraphTopo(MGraph *&G,GraphAdjList *&GL){
 }
 
 
-int TopologicalSort(GraphAdjList *GL){
-        cout<<"TopologicalSort";
-        //拓扑排序，若GL无回路，则输出拓扑排序序列并返回0，若有回路返回-1
+/* 拓扑排序，若GL无回路，则输出拓扑排序序列并返回1，若有回路返回0。 */
+int TopologicalSort(GraphAdjList GL)
+{
         EdgeNode *e;
-        int top = -1,count = 0;
         int i,k,gettop;
-        int* stack;
-        stack = (int*)malloc(sizeof(int) * GL->numNodes);
-        for(i = 0; i < GL->numNodes; i++)
-                if(0 == GL->adjList[i].in) //将入度为0的顶点入栈
-                        stack[++top] = i;
-        while (top != -1) {
-                gettop = stack[top--];
-                cout<<"出栈"<<endl;
-                cout<<GL->adjList[gettop].data;
-                count++;//输出i号顶点，并计数
-                for(e = GL->adjList[gettop].firstedge; e; e = e->next) {
-                        k = e->adjvex;
-                        if(!(--GL->adjList[k].in)) //将i号顶点的邻接点的入度减1，如果减一后入度为0，则入栈
-                                stack[++top] = k;
+        int top=0; /* 用于栈指针下标  */
+        int count=0;/* 用于统计输出顶点的个数  */
+        int *stack; /* 建栈将入度为0的顶点入栈  */
+        stack=(int *)malloc(GL->numNodes * sizeof(int) );
+
+        for(i = 0; i<GL->numNodes; i++)
+                if(0 == GL->adjList[i].in) /* 将入度为0的顶点入栈 */
+                        stack[++top]=i;
+        while(top!=0)
+        {
+                gettop=stack[top--];
+                printf("%d -> ",GL->adjList[gettop].data);
+                count++; /* 输出i号顶点，并计数 */
+                for(e = GL->adjList[gettop].firstedge; e; e = e->next)
+                {
+                        k=e->adjvex;
+                        if( !(--GL->adjList[k].in) ) /* 将i号顶点的邻接点的入度减1，如果减1后为0，则入栈 */
+                                stack[++top]=k;
                 }
         }
-        cout<<endl;
-        if(count < GL->numNodes) return -1;
-        else return 0;
-
+        printf("\n");
+        if(count < GL->numNodes)
+                return -1;
+        else
+                return 0;
 }
+
 void PrintPath_Floyd(MGraph G,Patharc P,ShortPathTable D){
         //输出从u到v的最短路径上顶点序列
         int v,w,k;
@@ -460,7 +461,7 @@ void MiniSpanTree_Prim(MGraph G,int v0,int &sum){
 
 }
 
-void ALBFSTraverse(GraphAdjList *GL){
+void ALBFSTraverse(GraphAdjList GL){
         cout<<"\n"<<"现在广度优先遍历邻接表"<<endl;
         int i;
         EdgeNode *p = NULL;
@@ -490,7 +491,7 @@ void ALBFSTraverse(GraphAdjList *GL){
         }
 }
 
-void ALDFSTraverse(GraphAdjList *GL){
+void ALDFSTraverse(GraphAdjList GL){
         cout<<"现在深度优先遍历邻接表"<<endl;
         // 初始化visited数组
         int i;
@@ -501,7 +502,7 @@ void ALDFSTraverse(GraphAdjList *GL){
                         ALDFS(GL,i);
 }
 
-void ALDFS(GraphAdjList *GL,int i){
+void ALDFS(GraphAdjList GL,int i){
         EdgeNode *p;
         visited[i] = true;
         printf("%c ",GL->adjList[i].data);//打印顶点
@@ -515,10 +516,10 @@ void ALDFS(GraphAdjList *GL,int i){
 }
 
 
-void CreateALGraphDemo(MGraph G,GraphAdjList *&GL){
+void CreateALGraphDemo(MGraph G,GraphAdjList &GL){
         int i,j;
         EdgeNode *e;
-        GL = (GraphAdjList *)malloc(sizeof(GraphAdjList));
+        GL = (graphAdjList *)malloc(sizeof(GraphAdjList));
         GL->numNodes = G.numNodes;
         GL->numEdges = G.numEdges;
         for(i=0; i<G.numNodes; i++) {
