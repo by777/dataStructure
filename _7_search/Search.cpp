@@ -137,7 +137,7 @@ int main(void)
 
         result=Binary_Search(arr,10,62);
         printf("Binary_Search:%d \n",result);
-//
+// //
 
         result=Interpolation_Search(arr,10,62);
         printf("Interpolation_Search:%d \n",result);
