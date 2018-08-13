@@ -145,7 +145,7 @@ int main(void)
 
         F[0]=0;
         F[1]=1;
-        for(i = 2; i < 100; i++)//
+        for(i = 2; i < 100; i++)//Fix BUG
         {
                 F[i] = F[i-1] + F[i-2];
         }
