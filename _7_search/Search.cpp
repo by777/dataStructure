@@ -3,7 +3,7 @@
 #include "io.h"
 #include "math.h"
 #include "time.h"
-#define _AUTHOR By777
+
 #define OK 1
 #define ERROR 0
 #define TRUE 1
