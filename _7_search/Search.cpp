@@ -97,8 +97,7 @@ int Fibonacci_Search(int *a,int n,int key)
                         high=mid-1;
                         k=k-1;
                 }
-                else if (key>a[mid])
-                {
+                else if (key>a[mid]) {
                         low=mid+1;
                         k=k-2;
                 }
