@@ -89,8 +89,7 @@ int Fibonacci_Search(int *a,int n,int key)
         for (i=n; i<F[k]-1; i++)
                 a[i]=a[n];
 
-        while(low<=high)
-        {
+        while(low<=high)        {
                 mid=low+F[k-1]-1;
                 if (key<a[mid])
                 {
