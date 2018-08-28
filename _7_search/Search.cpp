@@ -148,7 +148,6 @@ int main(void)
         }
         result=Fibonacci_Search(arr,10,62);
         printf("Fibonacci_Search:%d \n",result);
-
         return 0;
 }
 //End
