@@ -100,8 +100,7 @@ int Fibonacci_Search(int *a,int n,int key)
                         low=mid+1;
                         k=k-2;
                 }
-                else
-                {
+                else                {
                         if (mid<=n)
                                 return mid; /* 若相等则说明mid即为查找到的位置 */
                         else
