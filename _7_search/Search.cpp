@@ -10,7 +10,7 @@
 #define FALSE 0
 #define MAXSIZE 100 /* 存储空     	间初 始分配量 */
 
-typedef int Status; /* Status是函数的类型,其值是函数结果状态代码，如OK等 */
+typedef int Status; /* Status是函数的类型,其值是函数结果状态  代码，如OK等 */
 
 int F[100]; /* 斐波那契数列 */
 
@@ -56,8 +56,7 @@ int Binary_Search(int *a,int n,int key)
                 }
 
         }
-        return 0;
-}
+        return 0;}
 
 /* 插值查找 */
 int Interpolation_Search(int *a,int n,int key)
@@ -100,8 +99,7 @@ int Fibonacci_Search(int *a,int n,int key)
                         low=mid+1;
                         k=k-2;
                 }
-                else                {
-                        if (mid<=n)
+                else    {                        if (mid<=n)
                                 return mid; /* 若相等则说明mid即为查找到的位置 */
                         else
                                 return n;
@@ -142,6 +140,7 @@ int main(void)
         F[0]=0;
         F[1]=1;
         for(i = 2; i < 100; i++)//Fix BUG~
+
         {
                 F[i] = F[i-1] + F[i-2];
         }
