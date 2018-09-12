@@ -53,7 +53,6 @@ int Binary_Search(int *a,int n,int key)
                 {
                         return mid; /* 若相等则说明mid即为查找到的位置 */
                 }
-
         }
         return 0;}
 
