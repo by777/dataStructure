@@ -70,8 +70,7 @@ int Interpolation_Search(int *a,int n,int key)
                 else if (key>a[mid]) /* 若查找值比插值 大 */
                         low=mid+1; /* 最低下标调整到插值下标大一位 */
                 else
-                        return mid; /* 若相等则说明mid即为查找到的位置 */
-        }
+                        return mid; /* 若相等则说明mid即为查找到的位置 */        }
         return 0;
 }
 
