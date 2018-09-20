@@ -71,8 +71,7 @@ int Interpolation_Search(int *a,int n,int key)
                         low=mid+1; /* 最低下标调整到插值下标大一位 */
                 else
                         return mid; /* 若相等则说明mid即为查找到的位置 */        }
-        return 0;
-}
+        return 0;}
 
 /* 斐波那契查找 */
 int Fibonacci_Search(int *a,int n,int key)
