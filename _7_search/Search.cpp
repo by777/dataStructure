@@ -115,8 +115,7 @@ int main(void)
         int a[MAXSIZE+1],i,result;
         int arr[MAXSIZE]={0,1,16,24,35,47,59,62,73,88,99};
 
-        for(i=0; i<=MAXSIZE; i++)
-        {
+        for(i=0; i<=MAXSIZE; i++)        {
                 a[i]=i;
         }
         result=Sequential_Search(a,MAXSIZE,MAXSIZE);
